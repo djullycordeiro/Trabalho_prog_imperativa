@@ -1,0 +1,82 @@
+#include <gtk/gtk.h>
+
+static void print_hello (GtkWidget *widget, gpointer data){
+    // g_print() printa alguma coisa no terminal
+    g_print ("Print incial do projeto\n");
+}
+
+typedef struct {
+    // Struct pra receber a string
+    GtkWidget *campo_texto;
+} DadosApp;
+
+static void clicar (GtkWidget *widget, gpointer user_data){
+    // puxa os dados do struct
+    DadosApp *dados = user_data;
+    
+    // Recebe os dados e printa no terminal
+    const gchar *texto = gtk_editable_get_text(GTK_EDITABLE(dados->campo_texto));
+    g_print("Texto digitado: %s\n", texto);
+}
+
+static void activate (GtkApplication *app, gpointer user_data){
+    GtkWidget *window;
+    GtkWidget *button;
+    GtkWidget *caixa;
+    
+    // janela da aplicação
+    window = gtk_application_window_new (app);
+    gtk_window_set_title (GTK_WINDOW (window), "JustoBrush");
+    gtk_window_set_default_size (GTK_WINDOW (window), 400, 400);
+    
+
+    // botão que aparece na janela
+    //button = gtk_button_new_with_label ("Botão que fala");
+    //g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+    //gtk_window_set_child (GTK_WINDOW (window), button);
+
+    DadosApp *dados;
+
+    // n sei oq isso faz
+    dados = g_new0(DadosApp, 1);
+
+    // caixa de entrada
+    caixa = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_widget_set_margin_top(caixa, 15);
+    gtk_widget_set_margin_bottom(caixa, 15);
+    gtk_widget_set_margin_start(caixa, 15);
+    gtk_widget_set_margin_end(caixa, 15);
+    gtk_window_set_child(GTK_WINDOW(window), caixa);
+
+    // coloca os dados da caixa no struct
+    dados->campo_texto = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(dados->campo_texto), "Digite algo aqui...");
+    gtk_box_append(GTK_BOX(caixa), dados->campo_texto);
+
+    //Botão pra mostrar o texto
+    button = gtk_button_new_with_label("mostra");
+    
+    // Conecta o evento de clique ao callback, passando a estrutura de dados
+    g_signal_connect(button, "clicked", G_CALLBACK(clicar), dados);
+    gtk_box_append(GTK_BOX(caixa), button);
+
+    // Garante a liberação de memória quando a janela fechar
+    g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
+
+    gtk_window_present (GTK_WINDOW (window));
+}
+
+int main (int argc, char **argv){
+    GtkApplication *app;
+    int status;
+    
+    // Criação de uma nova instância pro app
+    app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
+    g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
+    status = g_application_run (G_APPLICATION (app), argc, argv);
+    g_object_unref (app);
+
+    return status;
+}
+

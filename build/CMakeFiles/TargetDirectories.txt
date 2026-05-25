@@ -1,0 +1,3 @@
+/mnt/c/Users/luisf/Documents/projeto_app_c_PI/Trabalho_prog_imperativa/build/CMakeFiles/ProjetoPI-FOP.dir
+/mnt/c/Users/luisf/Documents/projeto_app_c_PI/Trabalho_prog_imperativa/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/luisf/Documents/projeto_app_c_PI/Trabalho_prog_imperativa/build/CMakeFiles/rebuild_cache.dir
