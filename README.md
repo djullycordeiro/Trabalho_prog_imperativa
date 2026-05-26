@@ -1,9 +1,17 @@
 # Trabalho_prog_imperativa
 
 ## Compilação:
+Wsl:
     cd build
+    cmake ..
     make
     ./ProjetoPI-FOP
+
+MSYS2:
+    cd build
+    cmake -G "MinGW Makefiles" ..
+    mingw32-make
+    ProjetoPI-FOP.exe
 
 
 
