@@ -27,7 +27,7 @@ static void activate (GtkApplication *app, gpointer user_data){
     // janela da aplicação
     window = gtk_application_window_new (app);
     gtk_window_set_title (GTK_WINDOW (window), "JustoBrush");
-    gtk_window_set_default_size (GTK_WINDOW (window), 400, 400);
+    gtk_window_set_default_size (GTK_WINDOW (window), 1000, 800);
     
 
     // botão que aparece na janela
@@ -41,11 +41,11 @@ static void activate (GtkApplication *app, gpointer user_data){
     dados = g_new0(DadosApp, 1);
 
     // caixa de entrada
-    caixa = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    gtk_widget_set_margin_top(caixa, 15);
-    gtk_widget_set_margin_bottom(caixa, 15);
-    gtk_widget_set_margin_start(caixa, 15);
-    gtk_widget_set_margin_end(caixa, 15);
+    caixa = gtk_box_new(GTK_ORIENTATION_VERTICAL, 30);
+    gtk_widget_set_margin_top(caixa, 100);
+    gtk_widget_set_margin_bottom(caixa, 160);
+    gtk_widget_set_margin_start(caixa, 20);
+    gtk_widget_set_margin_end(caixa, 20);
     gtk_window_set_child(GTK_WINDOW(window), caixa);
 
     // coloca os dados da caixa no struct
@@ -79,4 +79,3 @@ int main (int argc, char **argv){
 
     return status;
 }
-
