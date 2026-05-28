@@ -22,6 +22,14 @@ mingw32-make
 ProjetoPI-FOP.exe
 ```
 
+### Ninja
+```bash
+mkdir build
+cd build
+cmake -G Ninja ..
+ninja
+.\ProjetoPI-FOP.exe 
+
 ## Como executar
 - Execute o binário gerado após a compilação.
 
