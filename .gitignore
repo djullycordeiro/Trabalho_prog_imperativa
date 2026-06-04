@@ -6,6 +6,11 @@ cmake_install.cmake
 Makefile
 
 ProjetoPI-FOP
+ProjetoPI-FOP.exe
 
 *~
 *.swp
+
+/.vscode/
+
+c_cpp_properties.json
