@@ -2,12 +2,14 @@
 #include "back.h"
 
 
-void clicar_botao_coa (GtkWidget *widget, gpointer user_data){
-    // puxa os dados do struct
-    DadosApp *dados = user_data;
+void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
+    Dados_login_senha *dados = user_data;
 
-    // Recebe os dados e printa no terminal
-    const gchar *texto = gtk_editable_get_text(GTK_EDITABLE(dados->campo_texto));
-    g_print("Texto digitado: %s\n", texto);
+    const gchar *login = gtk_editable_get_text(GTK_EDITABLE(dados->login));
+    const gchar *senha = gtk_editable_get_text(GTK_EDITABLE(dados->senha));
+    
+    g_print("Login: %s\n", login);
+    g_print("Senha: %s\n", senha);
+    
 }
 

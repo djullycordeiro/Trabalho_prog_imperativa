@@ -3,12 +3,12 @@
 
 #include <gtk/gtk.h>
 
-void clicar_botao_coa (GtkWidget *widget, gpointer user_data);
+void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data);
 
 typedef struct {
-    // Struct pra receber a string
-    GtkWidget *campo_texto;
-} DadosApp;
+    GtkWidget *login;
+    GtkWidget *senha;
+} Dados_login_senha;
 
 typedef struct {
     char classificacao_maxila[50]; //drop down
