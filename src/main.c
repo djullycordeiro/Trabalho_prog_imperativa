@@ -10,12 +10,20 @@ typedef struct {
     GtkWidget *campo_texto;
 } DadosApp;
 
+typedef struct{
+    char classificacao_maxila[50];
+    float CoA;
+    float CoGn;
+    float AFAI;
+} paciente;
+
 static void clicar (GtkWidget *widget, gpointer user_data){
     // puxa os dados do struct
     DadosApp *dados = user_data;
     
     // Recebe os dados e printa no terminal
     const gchar *texto = gtk_editable_get_text(GTK_EDITABLE(dados->campo_texto));
+    //paciente->texto;
     g_print("Texto digitado: %s\n", texto);
 }
 
@@ -50,7 +58,7 @@ static void activate (GtkApplication *app, gpointer user_data){
 
     // coloca os dados da caixa no struct
     dados->campo_texto = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(dados->campo_texto), "Digite algo aqui...");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(dados->campo_texto), "Digite o valor de CoA: ");
     gtk_box_append(GTK_BOX(caixa), dados->campo_texto);
 
     //Botão pra mostrar o texto
