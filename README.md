@@ -33,7 +33,7 @@ Tais valores se relacionam pela seguinte tabela (Tabela de McNAMARA):
 |97	|			        126-129	|			68-70|
 |98	|			        128-131	|			68-70|
 |99	|			        129-132	|			69-71|
-|100 |				        130-133	|			70-74|
+|100 |				       130-133	|			70-74|
 |101 |				        132-135	|			71-75|
 |102 |				        134-137	|			72-76|
 |103 |				        136-139	|			73-77|
@@ -69,7 +69,7 @@ para CoA 91, AFAI deveria ser 63-64, AFAI de 70mm (do paciente)
 **ALTURA FACIAL AUMENTADA**
 
 ## Como compilar
-### No WSL
+### No WSL (Luis)
 ```bash
 mkdir build
 cd build
@@ -78,7 +78,7 @@ make
 ./ProjetoPI-FOP
 ```
 
-### No MSYS2
+### No MSYS2 (Jamerson)
 ```bash
 mkdir build
 cd build
@@ -87,7 +87,7 @@ mingw32-make
 ProjetoPI-FOP.exe
 ```
 
-### Ninja
+### Ninja (Giulia)
 ```bash
 mkdir build
 cd build
@@ -95,6 +95,19 @@ cmake -G Ninja ..
 ninja
 .\ProjetoPI-FOP.exe 
 ```
+
+### MacOS (Fentes)
+
+```bash
+mkdir build
+cd build
+
+cmake ..
+make
+
+./ProjetoPI-FOP
+```
+
 
 ## Como executar
 - Execute o binário gerado após a compilação.
