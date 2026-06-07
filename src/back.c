@@ -11,5 +11,15 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
     g_print("Login: %s\n", login);
     g_print("Senha: %s\n", senha);
     
+    //tratamento de entrada (campo vazio)
+    if (strlen(login)==0)
+    gtk_widget_set_visible(dados->erro_login, TRUE);
+    else 
+    gtk_widget_set_visible(dados->erro_login,FALSE);
+
+    if (strlen(senha)==0)
+    gtk_widget_set_visible(dados->erro_senha, TRUE);
+    else 
+    gtk_widget_set_visible(dados->erro_senha, FALSE);
 }
 
