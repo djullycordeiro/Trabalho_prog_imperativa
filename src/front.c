@@ -21,6 +21,8 @@ static void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *caixa_login;
     GtkWidget *caixa_senha;
     GtkWidget *botao_criar_senha;
+    GtkWidget *erro_login;
+    GtkWidget *erro_senha;
     
     // janela da aplicação
     window = gtk_application_window_new (app);
@@ -47,6 +49,12 @@ static void activate (GtkApplication *app, gpointer user_data){
     gtk_box_append(GTK_BOX(caixa_login), dados->login);
     gtk_box_append(GTK_BOX(container), caixa_login);
 
+    //mensagem de erro_login
+    dados->erro_login = gtk_label_new("Insira um endereço de login válido");
+    gtk_widget_set_visible(dados->erro_login, FALSE);
+    gtk_box_append(GTK_BOX(container), dados->erro_login);
+
+
     // caixa de entrada senha
     caixa_senha = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     dados->senha = gtk_entry_new();
@@ -55,6 +63,11 @@ static void activate (GtkApplication *app, gpointer user_data){
     gtk_entry_set_placeholder_text(GTK_ENTRY(dados->senha), "Digite sua senha: ");
     gtk_box_append(GTK_BOX(caixa_senha), dados->senha);
     gtk_box_append(GTK_BOX(container), caixa_senha);
+
+    //mensagem de erro_senha
+    dados->erro_senha = gtk_label_new("Insira uma senha válida");
+    gtk_widget_set_visible(dados->erro_senha, FALSE);
+    gtk_box_append(GTK_BOX(container), dados->erro_senha);
     
     //Botão pra mostrar o texto
     button = gtk_button_new_with_label("Confirmar");

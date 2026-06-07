@@ -8,6 +8,8 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data);
 typedef struct {
     GtkWidget *login;
     GtkWidget *senha;
+    GtkWidget *erro_login;
+    GtkWidget *erro_senha;
 } Dados_login_senha;
 
 typedef struct {
