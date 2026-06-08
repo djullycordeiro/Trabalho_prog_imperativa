@@ -1,10 +1,10 @@
 #include <gtk/gtk.h>
 #include "back.h"
 
-static void abrir_nova_janela(GtkWidget *widget, gpointer data) {
+static void abrir_nova_janela(GtkWidget *widget, gpointer data) { 
     GtkWidget *nova_janela;
     nova_janela = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(nova_janela), "Gerador de Senha - JustAlloc");
+    gtk_window_set_title(GTK_WINDOW(nova_janela), "Gerador de Login - JustAlloc");
     gtk_window_set_default_size(GTK_WINDOW(nova_janela), 400, 200);
 
     //No lugar dessa label iremos criar o seguinte: 
@@ -20,7 +20,7 @@ static void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *button;
     GtkWidget *caixa_login;
     GtkWidget *caixa_senha;
-    GtkWidget *botao_criar_senha;
+    GtkWidget *botao_criar_login;
     GtkWidget *erro_login;
     GtkWidget *erro_senha;
     
@@ -31,7 +31,7 @@ static void activate (GtkApplication *app, gpointer user_data){
 
     Dados_login_senha *dados;
 
-    // n sei oq isso faz
+    // n sei oq isso faz ---> aloca a memória e inicializa tudo com 0 ao invés de valores aleatórios da memória
     dados = g_new0(Dados_login_senha, 1);
 
     // cria um conteiner que guarda as duas caixas de entrada
@@ -76,12 +76,10 @@ static void activate (GtkApplication *app, gpointer user_data){
     gtk_box_append(GTK_BOX(container), button);
 
 
-    botao_criar_senha = gtk_button_new_with_label("Criar login");
-    gtk_widget_add_css_class(botao_criar_senha, "flat"); // Remove o fundo e as bordas
-    g_signal_connect(botao_criar_senha, "clicked", G_CALLBACK(abrir_nova_janela), NULL);
-    gtk_box_append(GTK_BOX(container), botao_criar_senha);
-
-    
+    botao_criar_login = gtk_button_new_with_label("Criar login");
+    gtk_widget_add_css_class(botao_criar_login, "flat"); // Remove o fundo e as bordas
+    g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_nova_janela), NULL);
+    gtk_box_append(GTK_BOX(container), botao_criar_login);
     
     // Garante a liberação de memória quando a janela fechar
     g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
