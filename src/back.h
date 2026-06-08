@@ -19,4 +19,14 @@ typedef struct {
     float AFAI;
 } Paciente;
 
+
+// Definindo a estrutura para o cadastro do Sensei
+typedef struct {
+    char nome[100];
+    char cro[20];      // CREA DOS CARAS
+    char email[100];
+    char senha[50];
+} Doutor;
+
+
 #endif
