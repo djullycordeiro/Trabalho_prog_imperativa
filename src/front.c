@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 #include "back.h"
 
-static void abrir_nova_janela(GtkWidget *widget, gpointer data)
+void abrir_nova_janela(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
     GtkWidget *caixa;
@@ -101,7 +101,7 @@ static void abrir_nova_janela(GtkWidget *widget, gpointer data)
     );
 }
 
-static void abrir_tela_principal(GtkWidget *widget, gpointer data)
+void abrir_tela_principal(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
     GtkWidget *caixa;
@@ -171,7 +171,8 @@ static void abrir_tela_principal(GtkWidget *widget, gpointer data)
     );
 }
 
-static void activate (GtkApplication *app, gpointer user_data){
+
+void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *button;
     GtkWidget *caixa_login;
@@ -241,18 +242,4 @@ static void activate (GtkApplication *app, gpointer user_data){
     g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
 
     gtk_window_present (GTK_WINDOW (window));
-}
-
-int main (int argc, char **argv){
-    GtkApplication *app;
-    int status;
-    
-    // criação de uma nova instância pro app
-    app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
-    g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
-
-    status = g_application_run (G_APPLICATION (app), argc, argv);
-    g_object_unref (app);
-
-    return status;
 }
