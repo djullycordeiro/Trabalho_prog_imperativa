@@ -101,6 +101,76 @@ static void abrir_nova_janela(GtkWidget *widget, gpointer data)
     );
 }
 
+static void abrir_tela_principal(GtkWidget *widget, gpointer data)
+{
+    GtkWidget *janela;
+    GtkWidget *caixa;
+
+    GtkWidget *titulo;
+    GtkWidget *botao_novo_paciente;
+    GtkWidget *botao_visualizar;
+    GtkWidget *botao_sair;
+
+    janela = gtk_window_new();
+
+    gtk_window_set_title(
+        GTK_WINDOW(janela),
+        "JustAlloc"
+    );
+
+    gtk_window_set_default_size(
+        GTK_WINDOW(janela),
+        600,
+        400
+    );
+
+    caixa = gtk_box_new(
+        GTK_ORIENTATION_VERTICAL,
+        15
+    );
+
+    gtk_widget_set_margin_top(caixa, 40);
+    gtk_widget_set_margin_bottom(caixa, 40);
+    gtk_widget_set_margin_start(caixa, 40);
+    gtk_widget_set_margin_end(caixa, 40);
+
+    gtk_window_set_child(
+        GTK_WINDOW(janela),
+        caixa
+    );
+
+    titulo = gtk_label_new("Menu Principal");
+    gtk_box_append(GTK_BOX(caixa), titulo);
+
+    botao_novo_paciente =
+        gtk_button_new_with_label("Novo Paciente");
+
+    gtk_box_append(
+        GTK_BOX(caixa),
+        botao_novo_paciente
+    );
+
+    botao_visualizar =
+        gtk_button_new_with_label("Visualizar Pacientes");
+
+    gtk_box_append(
+        GTK_BOX(caixa),
+        botao_visualizar
+    );
+
+    botao_sair =
+        gtk_button_new_with_label("Sair");
+
+    gtk_box_append(
+        GTK_BOX(caixa),
+        botao_sair
+    );
+
+    gtk_window_present(
+        GTK_WINDOW(janela)
+    );
+}
+
 static void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *button;
@@ -155,10 +225,10 @@ static void activate (GtkApplication *app, gpointer user_data){
     gtk_widget_set_visible(dados->erro_senha, FALSE);
     gtk_box_append(GTK_BOX(container), dados->erro_senha);
     
-    //Botão pra mostrar o texto
+    //botão pra mostrar o texto
     button = gtk_button_new_with_label("Confirmar");
     // Conecta o evento de clique ao callback, passando a estrutura de dados
-    g_signal_connect(button, "clicked", G_CALLBACK(clicar_botao_confirmar_login), dados);
+    g_signal_connect(button, "clicked", G_CALLBACK(abrir_tela_principal), NULL);
     gtk_box_append(GTK_BOX(container), button);
 
 
@@ -167,7 +237,7 @@ static void activate (GtkApplication *app, gpointer user_data){
     g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_nova_janela), NULL);
     gtk_box_append(GTK_BOX(container), botao_criar_login);
     
-    // Garante a liberação de memória quando a janela fechar
+    // liberação de memória quando a janela fechar
     g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
 
     gtk_window_present (GTK_WINDOW (window));
@@ -177,7 +247,7 @@ int main (int argc, char **argv){
     GtkApplication *app;
     int status;
     
-    // Criação de uma nova instância pro app
+    // criação de uma nova instância pro app
     app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
 
