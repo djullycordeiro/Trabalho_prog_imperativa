@@ -3,7 +3,13 @@ project(ProjetoPI-FOP C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(${PROJECT_NAME} src/front.c src/back.c src/back.h)
+add_executable(${PROJECT_NAME} 
+src/main.c
+src/front.c
+src/front.h 
+src/back.c 
+src/back.h
+)
 
 # Isso é pra encontrar o gtk em cada sistema operacional
 if(APPLE)
