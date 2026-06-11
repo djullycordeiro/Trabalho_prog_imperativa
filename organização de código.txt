@@ -8,13 +8,9 @@ src/
 │   ├── telas
 │   └── callbacks
 │
-├── models/
-│
 ├── services/
 │
 ├── persistence/
-│
-└── utils/
 
 ->main.c
 Ponto de entrada do programa.
@@ -43,13 +39,6 @@ Cliques de botão
 Mudanças em campos
 Eventos de janela
 
-->models/ 
-Estruturas do sistema (structs)
-Só define os dados.
-Não usa GTK.
-Não salva arquivos.
-Não faz cálculos.
-
 ->services/
 A inteligência do sistema.
 Aqui fica:
@@ -64,10 +53,6 @@ Tudo relacionado a:
 CSV
 TXT
 Arquivos em geral
-
-->utils/
-Funções genéricas reutilizáveis
-Funções que podem ser usadas em qualquer parte do sistema
 
 em resumo:
 gui         → interface
