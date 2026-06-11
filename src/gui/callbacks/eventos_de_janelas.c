@@ -1,5 +1,25 @@
 #include <gtk/gtk.h>
+#include <string.h>
+#include "../telas/front.h"
+#include "../../services/back.h"
 
+/**
+ * eventos_de_janelas.c - Callbacks e manipuladores de eventos da GUI
+ * 
+ * Responsabilidades:
+ *   - Capturar eventos de interacao do usuario (cliques, entrada de texto, etc)
+ *   - Validar entradas atraves de chamadas para services/back.c
+ *   - Atualizar a interface grafica com feedback visual
+ */
+
+/**
+ * clicar_botao_confirmar_login - Valida os dados de login inseridos
+ * @widget: o botao que foi clicado
+ * @user_data: estrutura Dados_login_senha contendo os widgets de entrada
+ * 
+ * Obtem os valores dos campos de login e senha, valida se estao vazios,
+ * e exibe mensagens de erro caso necessario.
+ */
 void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
     Dados_login_senha *dados = user_data;
 

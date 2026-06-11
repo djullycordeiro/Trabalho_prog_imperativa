@@ -1,7 +1,18 @@
 #include <gtk/gtk.h>
-#include "back.h"
+#include <string.h>
+#include "front.h"
+#include "../callbacks/eventos_de_janelas.h"
+#include "../../services/back.h"
 
 
+/**
+ * abrir_janela_de_cadastro - Cria a tela de cadastro de novo doutor
+ * @widget: widget que disparou o evento
+ * @data: dados passados ao callback
+ * 
+ * Constrói e exibe uma janela com formulário para cadastro de novo doutor
+ * contendo campos: nome, CRO, email e senha
+ */
 void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
@@ -102,6 +113,16 @@ void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data)
     );
 }
 
+/**
+ * abrir_tela_ala_do_paciente - Cria a tela principal (menu de pacientes)
+ * @widget: widget que disparou o evento
+ * @data: dados passados ao callback
+ * 
+ * Constrói e exibe a janela principal com opções de:
+ * - Novo Paciente
+ * - Visualizar Pacientes
+ * - Sair
+ */
 void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
@@ -171,13 +192,24 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
     gtk_window_present(GTK_WINDOW(janela));
 }
 
-    void activate (GtkApplication *app, gpointer user_data){
-        /*
-        Página inicial de abertura da aplicação
-        Abre uma página de login com opções de:
-            - Criar conta
-            - Fazer Login
-        */
+/**
+ * activate - Cria a tela inicial de login da aplicação
+ * @app: aplicação GTK
+ * @user_data: dados do usuário
+ * 
+ * Constrói e exibe a janela de login com campos para:
+ * - Login (CPF)
+ * - Senha
+ * - Botão "Confirmar" (executa validação)
+ * - Botão "Criar login" (abre tela de cadastro)
+ */
+void activate (GtkApplication *app, gpointer user_data){
+    /**
+    * Página inicial de abertura da aplicação
+    * Abre uma página de login com opções de:
+    *     - Criar conta
+    *     - Fazer Login
+    */
     
         GtkWidget *window;
         GtkWidget *button;
@@ -232,10 +264,10 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
         gtk_widget_set_visible(dados->erro_senha, FALSE);
         gtk_box_append(GTK_BOX(container), dados->erro_senha);
         
-        //Botão pra mostrar o texto
+        // Botão para confirmar login
         button = gtk_button_new_with_label("Confirmar");
-        // Conecta o evento de clique ao callback, passando a estrutura de dados
-        g_signal_connect(button, "clicked", G_CALLBACK(abrir_tela_ala_do_paciente), NULL);
+        // Conecta o evento de clique ao callback de validação de login
+        g_signal_connect(button, "clicked", G_CALLBACK(clicar_botao_confirmar_login), dados);
         gtk_box_append(GTK_BOX(container), button);
     
     

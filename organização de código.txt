@@ -1,60 +1,62 @@
-organização de código
+Organização de código
+!!!!!!!!!!! arrumar o "CMakeLists.txt" SEMPRE que modificar os arquivos !!!!!!!!!!!
 
 src/
 │
-├── main.c  
-│
 ├── gui/
-│   ├── telas
-│   └── callbacks
+│   ├── telas/
+│   └── callbacks/
+│
+├── persistence/
 │
 ├── services/
 │
-├── persistence/
+└── main.c
+
 
 ->main.c
-Ponto de entrada do programa.
+Ponto de entrada do programa
 Responsável por:
-Iniciar GTK
-Abrir a primeira tela
-Configurações gerais
+    Iniciar GTK
+    Abrir a primeira tela
+    Configurações gerais
 
 ->gui/
 Tudo relacionado à interface gráfica.
 
->telas
-Arquivos que constroem as telas/widgets
-Contém:
-GtkWindow
-GtkBox
-GtkGrid
-GtkEntry
-GtkButton
-GtkLabel
+    >telas
+    Arquivos que constroem as telas/widgets
+    Contém:
+        GtkWindow
+        GtkBox
+        GtkGrid
+        GtkEntry
+        GtkButton
+        GtkLabel
 
->call-backs
-Eventos dos widgets:
-Contém:
-Cliques de botão
-Mudanças em campos
-Eventos de janela
+    >call-backs
+    Eventos dos widgets
+    Contém:
+        Cliques de botão
+        Mudanças em campos
+        Eventos de janela
 
 ->services/
 A inteligência do sistema.
 Aqui fica:
-Árvore de decisão
-Regras de negócio
-Validações
-É o "cérebro" do programa.
+    Árvore de decisão
+    Regras de negócio
+    Validações
+    É o "cérebro" do programa.
 
 ->persistence/
 Salvar e carregar dados.
 Tudo relacionado a:
-CSV
-TXT
-Arquivos em geral
+    CSV
+    TXT
+    Arquivos em geral
 
-em resumo:
+Em resumo:
 gui         → interface
 models      → dados
 services    → lógica e diagnóstico
