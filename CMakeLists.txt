@@ -4,11 +4,13 @@ project(ProjetoPI-FOP C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(${PROJECT_NAME} 
+src/gui/telas/front.c
+src/gui/telas/front.h 
+src/gui/callbacks/eventos_de_janelas.c
+src/gui/callbacks/eventos_de_janelas.h
+src/services/back.c 
+src/services/back.h
 src/main.c
-src/front.c
-src/front.h
-src/back.c 
-src/back.h
 )
 
 # Isso é pra encontrar o gtk em cada sistema operacional
