@@ -3,14 +3,14 @@
 #include "services/back.h"
 
 /**
- * main.c - Ponto de entrada do programa
- * 
- * Responsabilidades:
- *   - Inicializar GTK
- *   - Criar a aplicação GTK
- *   - Abrir a primeira tela (login)
- *   - Configurações gerais da aplicação
- */
+main.c - Ponto de entrada do programa
+
+RESPONSABILIDADES:
+    - Inicializar GTK
+    - Criar a aplicação GTK
+    - Abrir a primeira tela (login)
+    - Configurações gerais da aplicação
+*/
 
 int main (int argc, char **argv){
     GtkApplication *app;

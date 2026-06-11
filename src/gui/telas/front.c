@@ -6,13 +6,14 @@
 
 
 /**
- * abrir_janela_de_cadastro - Cria a tela de cadastro de novo doutor
- * @widget: widget que disparou o evento
- * @data: dados passados ao callback
- * 
- * Constrói e exibe uma janela com formulário para cadastro de novo doutor
- * contendo campos: nome, CRO, email e senha
- */
+abrir_janela_de_cadastro - Cria a tela de cadastro de novo doutor
+@widget: widget que disparou o evento
+@data: dados passados ao callback
+
+Constrói e exibe uma janela com formulário para cadastro de novo doutor
+contendo campos: nome, CRO, email e senha
+*/
+
 void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
@@ -114,15 +115,15 @@ void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data)
 }
 
 /**
- * abrir_tela_ala_do_paciente - Cria a tela principal (menu de pacientes)
- * @widget: widget que disparou o evento
- * @data: dados passados ao callback
- * 
- * Constrói e exibe a janela principal com opções de:
- * - Novo Paciente
- * - Visualizar Pacientes
- * - Sair
- */
+abrir_tela_ala_do_paciente - Cria a tela principal (menu de pacientes)
+@widget: widget que disparou o evento
+@data: dados passados ao callback
+
+Constrói e exibe a janela principal com opções de:
+- Novo Paciente
+- Visualizar Pacientes
+- Sair
+*/
 void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
@@ -193,22 +194,22 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
 }
 
 /**
- * activate - Cria a tela inicial de login da aplicação
- * @app: aplicação GTK
- * @user_data: dados do usuário
- * 
- * Constrói e exibe a janela de login com campos para:
- * - Login (CPF)
- * - Senha
- * - Botão "Confirmar" (executa validação)
- * - Botão "Criar login" (abre tela de cadastro)
+activate - Cria a tela inicial de login da aplicação
+@app: aplicação GTK
+@user_data: dados do usuário
+
+Constrói e exibe a janela de login com campos para:
+- Login (CPF)
+- Senha
+- Botão "Confirmar" (executa validação)
+- Botão "Criar login" (abre tela de cadastro)
  */
 void activate (GtkApplication *app, gpointer user_data){
-    /**
-    * Página inicial de abertura da aplicação
-    * Abre uma página de login com opções de:
-    *     - Criar conta
-    *     - Fazer Login
+    /*
+    Página inicial de abertura da aplicação
+    Abre uma página de login com opções de:
+        - Criar conta
+        - Fazer Login
     */
     
         GtkWidget *window;
