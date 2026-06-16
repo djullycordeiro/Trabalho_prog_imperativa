@@ -22,6 +22,7 @@ void abrir_tela_novo_paciente(GtkWidget *widget, gpointer data)
     GtkWidget *titulo;
     GtkWidget *nome;
     GtkWidget *idade;
+    GtkWidget *data_de_nascimento;
     GtkWidget *coa;
     GtkWidget *cogn;
     GtkWidget *afai;
