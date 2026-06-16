@@ -14,6 +14,100 @@ Constrói e exibe uma janela com formulário para cadastro de novo doutor
 contendo campos: nome, CRO, email e senha
 */
 
+void abrir_tela_novo_paciente(GtkWidget *widget, gpointer data)
+{
+    GtkWidget *janela;
+    GtkWidget *caixa;
+
+    GtkWidget *titulo;
+    GtkWidget *nome;
+    GtkWidget *idade;
+    GtkWidget *coa;
+    GtkWidget *cogn;
+    GtkWidget *afai;
+
+    GtkWidget *botao_arquivo;
+    GtkWidget *label_arquivo;
+
+    GtkWidget *botao_salvar;
+    GtkWidget *botao_voltar;
+
+    janela = gtk_window_new();
+
+    gtk_window_set_title(
+        GTK_WINDOW(janela),
+        "Novo Paciente"
+    );
+
+    gtk_window_set_default_size(
+        GTK_WINDOW(janela),
+        500,
+        500
+    );
+
+    caixa = gtk_box_new(
+        GTK_ORIENTATION_VERTICAL,
+        12
+    );
+
+    gtk_widget_set_margin_top(caixa, 30);
+    gtk_widget_set_margin_bottom(caixa, 30);
+    gtk_widget_set_margin_start(caixa, 30);
+    gtk_widget_set_margin_end(caixa, 30);
+
+    gtk_window_set_child(
+        GTK_WINDOW(janela),
+        caixa
+    );
+
+    titulo = gtk_label_new("Cadastrar Novo Paciente");
+    gtk_box_append(GTK_BOX(caixa), titulo);
+
+    nome = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(nome), "Nome do paciente");
+    gtk_box_append(GTK_BOX(caixa), nome);
+
+    data_de_nascimento = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(data_de_nascimento), "Data de nascimento");
+    gtk_box_append(GTK_BOX(caixa), data_de_nascimento);
+
+    coa = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(coa), "CoA - Comprimento da Maxila");
+    gtk_box_append(GTK_BOX(caixa), coa);
+
+    cogn = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(cogn), "CoGn - Comprimento Mandibular");
+    gtk_box_append(GTK_BOX(caixa), cogn);
+
+    afai = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(afai), "AFAI - Altura Facial Anterior");
+    gtk_box_append(GTK_BOX(caixa), afai);
+
+    label_arquivo = gtk_label_new("Nenhum arquivo selecionado");
+    gtk_box_append(GTK_BOX(caixa), label_arquivo);
+
+    botao_arquivo = gtk_button_new_with_label("Selecionar arquivo");
+    gtk_box_append(GTK_BOX(caixa), botao_arquivo);
+
+    botao_salvar = gtk_button_new_with_label("Salvar Paciente");
+    gtk_box_append(GTK_BOX(caixa), botao_salvar);
+
+    botao_voltar = gtk_button_new_with_label("Voltar");
+    gtk_box_append(GTK_BOX(caixa), botao_voltar);
+
+    g_signal_connect_swapped(
+        botao_voltar,
+        "clicked",
+        G_CALLBACK(gtk_window_close),
+        janela
+    );
+
+    gtk_window_present(GTK_WINDOW(janela));
+
+    
+}
+
+
 void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data)
 {
     GtkWidget *janela;
@@ -138,7 +232,7 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
 
     gtk_window_set_title(
         GTK_WINDOW(janela),
-        "JustAlloc"
+        "JustAllign"
     );
 
     gtk_window_set_default_size(
@@ -168,18 +262,32 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
     botao_novo_paciente =
         gtk_button_new_with_label("Novo Paciente");
 
+        g_signal_connect(
+        
+    botao_novo_paciente,
+    "clicked",
+    G_CALLBACK(abrir_tela_novo_paciente),
+    NULL);
+
     gtk_box_append(
         GTK_BOX(caixa),
         botao_novo_paciente
     );
 
     botao_visualizar =
-        gtk_button_new_with_label("Visualizar Pacientes");
+    gtk_button_new_with_label("Visualizar Pacientes");
 
-    gtk_box_append(
-        GTK_BOX(caixa),
-        botao_visualizar
-    );
+g_signal_connect(
+    botao_visualizar,
+    "clicked",
+    G_CALLBACK(abrir_tela_visualizar_pacientes),
+    NULL
+);
+
+gtk_box_append(
+    GTK_BOX(caixa),
+    botao_visualizar
+);
 
     botao_sair =
         gtk_button_new_with_label("Sair");
@@ -189,6 +297,93 @@ void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data)
         botao_sair
     );
 
+
+    gtk_window_present(GTK_WINDOW(janela));
+}
+
+void abrir_tela_visualizar_pacientes(GtkWidget *widget, gpointer data)
+{
+    GtkWidget *janela;
+    GtkWidget *caixa_principal;
+    GtkWidget *titulo;
+    GtkWidget *cabecalho;
+    GtkWidget *lista;
+    GtkWidget *paciente1;
+    GtkWidget *paciente2;
+    GtkWidget *paciente3;
+    GtkWidget *botao_voltar;
+
+    janela = gtk_window_new();
+
+    gtk_window_set_title(GTK_WINDOW(janela), "Visualizar Pacientes");
+    gtk_window_set_default_size(GTK_WINDOW(janela), 850, 450);
+
+    caixa_principal = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+
+    gtk_widget_set_margin_top(caixa_principal, 30);
+    gtk_widget_set_margin_bottom(caixa_principal, 30);
+    gtk_widget_set_margin_start(caixa_principal, 30);
+    gtk_widget_set_margin_end(caixa_principal, 30);
+
+    gtk_window_set_child(GTK_WINDOW(janela), caixa_principal);
+
+    titulo = gtk_label_new("Pacientes Cadastrados");
+    gtk_box_append(GTK_BOX(caixa_principal), titulo);
+
+    cabecalho = gtk_label_new("Nome | Data de nascimento | CPF | CoA | CoGn | AFAI");
+    gtk_box_append(GTK_BOX(caixa_principal), cabecalho);
+
+    lista = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
+    gtk_box_append(GTK_BOX(caixa_principal), lista);
+
+    paciente1 = gtk_button_new_with_label(
+        "Jefferson Junior | 16/06/2009 | 123.456.789-00 | CoA: 125 | CoGn: 79 | AFAI: 129"
+    );
+
+    g_signal_connect(
+        paciente1,
+        "clicked",
+        G_CALLBACK(abrir_tela_arquivos_paciente),
+        NULL
+    );
+
+    gtk_box_append(GTK_BOX(lista), paciente1);
+
+    paciente2 = gtk_button_new_with_label(
+        "Maria Souza | 22/03/2008 | 987.654.321-00 | CoA: 118 | CoGn: 75 | AFAI: 122"
+    );
+
+    g_signal_connect(
+        paciente2,
+        "clicked",
+        G_CALLBACK(abrir_tela_arquivos_paciente),
+        NULL
+    );
+
+    gtk_box_append(GTK_BOX(lista), paciente2);
+
+    paciente3 = gtk_button_new_with_label(
+        "João Silva | 10/11/2007 | 456.789.123-00 | CoA: 121 | CoGn: 77 | AFAI: 126"
+    );
+
+    g_signal_connect(
+        paciente3,
+        "clicked",
+        G_CALLBACK(abrir_tela_arquivos_paciente),
+        NULL
+    );
+
+    gtk_box_append(GTK_BOX(lista), paciente3);
+
+    botao_voltar = gtk_button_new_with_label("Voltar");
+    gtk_box_append(GTK_BOX(caixa_principal), botao_voltar);
+
+    g_signal_connect_swapped(
+        botao_voltar,
+        "clicked",
+        G_CALLBACK(gtk_window_close),
+        janela
+    );
 
     gtk_window_present(GTK_WINDOW(janela));
 }
@@ -222,7 +417,7 @@ void activate (GtkApplication *app, gpointer user_data){
         
         // janela da aplicação
         window = gtk_application_window_new (app);
-        gtk_window_set_title (GTK_WINDOW (window), "JustAlloc");
+        gtk_window_set_title (GTK_WINDOW (window), "JustAllign");
         gtk_window_set_default_size (GTK_WINDOW (window), 1000, 800);
     
         Dados_login_senha *dados;
@@ -237,6 +432,15 @@ void activate (GtkApplication *app, gpointer user_data){
         gtk_widget_set_margin_start(container, 40);
         gtk_widget_set_margin_end(container, 40);
         gtk_window_set_child(GTK_WINDOW(window), container);
+        
+        GtkWidget *titulo;
+        GtkWidget *subtitulo;
+
+        titulo = gtk_label_new("JustAllign");
+        gtk_box_append(GTK_BOX(container), titulo);
+
+        subtitulo = gtk_label_new("Sistema de Interpretação Odontológica");
+        gtk_box_append(GTK_BOX(container), subtitulo);
     
         // caixa de entrada login
         caixa_login = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -279,6 +483,84 @@ void activate (GtkApplication *app, gpointer user_data){
         
         // Garante a liberação de memória quando a janela fechar
         g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
-    
-        gtk_window_present (GTK_WINDOW (window));
+
+        // gtk_window_present(GTK_WINDOW(window)); // login desativado para testes
+        abrir_tela_ala_do_paciente(NULL, NULL);
+        //gtk_window_present (GTK_WINDOW (window));
     }
+    
+
+void abrir_tela_arquivos_paciente(GtkWidget *widget, gpointer data)
+{
+    GtkWidget *janela;
+    GtkWidget *caixa;
+    GtkWidget *titulo;
+    GtkWidget *dados;
+    GtkWidget *subtitulo_arquivos;
+    GtkWidget *arquivo1;
+    GtkWidget *arquivo2;
+    GtkWidget *subtitulo_comentarios;
+    GtkWidget *comentarios;
+    GtkWidget *botao_salvar_comentario;
+    GtkWidget *botao_voltar;
+
+    janela = gtk_window_new();
+
+    gtk_window_set_title(GTK_WINDOW(janela), "Detalhes do Paciente");
+    gtk_window_set_default_size(GTK_WINDOW(janela), 600, 600);
+
+    caixa = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+
+    gtk_widget_set_margin_top(caixa, 30);
+    gtk_widget_set_margin_bottom(caixa, 30);
+    gtk_widget_set_margin_start(caixa, 30);
+    gtk_widget_set_margin_end(caixa, 30);
+
+    gtk_window_set_child(GTK_WINDOW(janela), caixa);
+
+    titulo = gtk_label_new("Dados do Paciente");
+    gtk_box_append(GTK_BOX(caixa), titulo);
+
+    dados = gtk_label_new(
+        "Nome: Jefferson Junior\n"
+        "Data de nascimento: 16/06/2009\n"
+        "CPF: 123.456.789-00\n"
+        "CoA: 125\n"
+        "CoGn: 79\n"
+        "AFAI: 129\n"
+        "Classificação: Maxila Protrusa"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados);
+
+    subtitulo_arquivos = gtk_label_new("Arquivos enviados");
+    gtk_box_append(GTK_BOX(caixa), subtitulo_arquivos);
+
+    arquivo1 = gtk_button_new_with_label("Radiografia frontal.png");
+    gtk_box_append(GTK_BOX(caixa), arquivo1);
+
+    arquivo2 = gtk_button_new_with_label("Radiografia lateral.png");
+    gtk_box_append(GTK_BOX(caixa), arquivo2);
+
+    subtitulo_comentarios = gtk_label_new("Comentários do médico sobre a evolução");
+    gtk_box_append(GTK_BOX(caixa), subtitulo_comentarios);
+
+    comentarios = gtk_text_view_new();
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(comentarios), GTK_WRAP_WORD);
+    gtk_widget_set_size_request(comentarios, 500, 120);
+    gtk_box_append(GTK_BOX(caixa), comentarios);
+
+    botao_salvar_comentario = gtk_button_new_with_label("Salvar comentário");
+    gtk_box_append(GTK_BOX(caixa), botao_salvar_comentario);
+
+    botao_voltar = gtk_button_new_with_label("Voltar");
+    gtk_box_append(GTK_BOX(caixa), botao_voltar);
+
+    g_signal_connect_swapped(
+        botao_voltar,
+        "clicked",
+        G_CALLBACK(gtk_window_close),
+        janela
+    );
+
+    gtk_window_present(GTK_WINDOW(janela));
+}

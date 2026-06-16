@@ -20,4 +20,16 @@ void abrir_janela_de_cadastro(GtkWidget *widget, gpointer data);
 //abrir_tela_ala_do_paciente - Tela principal (menu de pacientes)
 void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data);
 
+//abrir_tela_novo_paciente - Tela de cadastro de novo paciente (subir arquivos)
+void abrir_tela_novo_paciente(GtkWidget *widget, gpointer data);
+
+//abrir_tela_visualizar_pacientes - Tela de visualização dos pacientes cadastrados
+void abrir_tela_visualizar_pacientes(GtkWidget *widget, gpointer data);
+
+//abrir_tela_arquivos_paciente - Tela de visualização dos arquivos de um paciente com mais detalhes
+void abrir_tela_arquivos_paciente(GtkWidget *widget, gpointer data);
+
+//abrir_tela_ala_do_paciente - Tela principal (menu de pacientes)
+void abrir_tela_visualizar_pacientes(GtkWidget *widget, gpointer data);
+
 #endif
