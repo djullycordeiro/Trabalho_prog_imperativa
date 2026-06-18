@@ -10,7 +10,7 @@ Abre uma página de login com opções de:
 */
 
 void abrir_tela_login(GtkWidget *widget, gpointer user_data){
-    
+
     GtkApplication *app = GTK_APPLICATION(user_data);
 
     GtkWidget *window;
@@ -90,7 +90,5 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     // Garante a liberação de memória quando a janela fechar
     g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
 
-    gtk_window_present(GTK_WINDOW(window)); // login desativado para testes
-    //abrir_tela_home_doutor_logado(NULL, NULL);
-    gtk_window_present (GTK_WINDOW (window));
+    gtk_window_present(GTK_WINDOW(window)); 
 }
