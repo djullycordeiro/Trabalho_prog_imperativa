@@ -22,4 +22,10 @@
  */
 void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data);
 
+// Callback para o botão de cadastrar doutor
+void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data);
+
+// Callback para o botão de cadastro de paciente
+void clicar_botao_cadastrar_paciente();
+
 #endif

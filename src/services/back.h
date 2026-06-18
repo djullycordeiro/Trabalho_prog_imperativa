@@ -9,10 +9,12 @@ e NAO devem conter nenhuma referencia a GTK
 
 //Estrutura para armazenar dados do paciente
 typedef struct {
+    char nome[100];
+    char idade[4];
+    char coa[4];
+    char cogn[4];
+    char afai[4];
     char classificacao_maxila[50];
-    float CoA;
-    float CoGn;
-    float AFAI;
 } Paciente;
 
 typedef struct {
@@ -22,7 +24,11 @@ typedef struct {
     char senha[50];
 } Doutor;
 
-void cadastrarDoutor();
+// Persistance: registra um novo doutor a partir de uma estrutura Doutor
+// Retorna 1 em caso de sucesso, 0 em caso de falha
+int cadastrarDoutor(const Doutor *doutor);
+int cadastrarPaciente(const Paciente *paciente);
+
 int realizarLogin();
 
 /**
