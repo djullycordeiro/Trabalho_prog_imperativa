@@ -2,36 +2,56 @@
 #include <string.h>
 #include <stdio.h>
 
-void cadastrarDoutor() {
-    FILE *arquivo = fopen("usuarios.txt", "a");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o banco de dados!\n");
-        return;
+int cadastrarDoutor(const Doutor *doutor) {
+    if (doutor == NULL) {
+        return 0;
     }
 
-    Doutor novoDoutor;
+    char caminho_csv[] = "../src/data/usuarios.csv";
 
-    printf("\n CADASTRO DO DOUTOR (FOP) \n");
-    printf("Nome completo: ");
-    scanf(" %[^\n]", novoDoutor.nome); // Lê strings com espaços
+    FILE *arquivo = fopen(caminho_csv, "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o banco de dados!\n");
+        return 0;
+    }
 
-    printf("CRO (ex: PE-12345): ");
-    scanf("%s", novoDoutor.cro);
-
-    printf("E-mail: ");
-    scanf("%s", novoDoutor.email);
-
-    printf("Senha: ");
-    scanf("%s", novoDoutor.senha);
-
-    fprintf(arquivo, "%s;%s;%s;%s\n", novoDoutor.nome, novoDoutor.cro, novoDoutor.email, novoDoutor.senha);
+    if (fprintf(arquivo, "%s,%s,%s,%s\n", doutor->nome, doutor->senha, doutor->email, doutor->cro) < 0) {
+        fclose(arquivo);
+        return 0;
+    }
 
     fclose(arquivo);
-    printf("\nCadastro realizado com sucesso!\n");
+    printf("\nCadastro do doutor '%s' realizado com sucesso!\n", doutor->nome);
+    return 1;
+}
+
+int cadastrarPaciente(const Paciente *paciente){
+    if (paciente == NULL) {
+        return 0;
+    }
+
+    char caminho_csv[] = "../src/data/pacientes.csv";
+
+    FILE *arquivo = fopen(caminho_csv, "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o banco de dados!\n");
+        return 0;
+    }
+
+    if (fprintf(arquivo, "%s,%s,%s,%s,%s,%s\n", paciente->nome, paciente->idade, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila) < 0) {
+        fclose(arquivo);
+        return 0;
+    }
+
+    fclose(arquivo);
+    printf("\nCadastro do paciente '%s' realizado com sucesso!\n", paciente->nome);
+    return 1;
+
 }
 
 int realizarLogin() {
-    FILE *arquivo = fopen("usuarios.txt", "r");
+    // Nessa função a gente vai ler o arquivo csv e verificar se as primeiras duas colunas batem com o login e senha
+    FILE *arquivo = fopen("usuarios.csv", "r");
     if (arquivo == NULL) {
         printf("Nenhum usuário cadastrado ainda!\n");
         return 0; // Falha no login

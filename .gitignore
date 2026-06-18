@@ -13,4 +13,6 @@ ProjetoPI-FOP.exe
 
 /.vscode/
 
+/src/data/
+
 c_cpp_properties.json

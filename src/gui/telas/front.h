@@ -11,6 +11,25 @@ typedef struct {
     GtkWidget *erro_senha;
 } Dados_login_senha;
 
+// Estrutura para armazenar widgets do formulário de cadastro de doutor
+typedef struct {
+    GtkWidget *nome;
+    GtkWidget *cro;
+    GtkWidget *email;
+    GtkWidget *senha;
+    GtkWidget *janela;
+} Dados_doutor;
+
+typedef struct {
+    GtkWidget *nome;
+    GtkWidget *idade;
+    GtkWidget *coa;
+    GtkWidget *cogn;
+    GtkWidget *afai;
+    GtkWidget *classificacao_maxila;
+    GtkWidget *janela;
+} Dados_paciente;
+
 //activate - Tela de login da aplicacao
 void activate(GtkApplication *app, gpointer user_data);
 
