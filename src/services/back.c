@@ -41,3 +41,52 @@ void verificar_confirmacao_de_login(){
     */
     return;
 }
+
+//função pra validar o CRO, evitando inserts 
+int validar_cro(const char *cro) {
+    if (strlen(cro) != 8) return 0;
+    if (cro[2] != '-') return 0;
+
+    char sigla[3];
+    sigla[0] = cro[0];
+    sigla[1] = cro[1];
+    sigla[2] = '\0';
+
+    const char *estados_validos[] = {
+        "AC","AL","AP","AM","BA","CE","DF","ES","GO",
+        "MA","MT","MS","MG","PA","PB","PR","PE","PI",
+        "RJ","RN","RS","RO","RR","SC","SP","SE","TO"
+    };
+
+    int sigla_valida = 0;
+    for (int i = 0; i < 27; i++) {
+        if (strcmp(sigla, estados_validos[i]) == 0) {
+            sigla_valida = 1;
+            break;
+        }
+    }
+
+    if (!sigla_valida) return 0;
+
+
+    for (int i = 3; i < 8; i++) {
+        if (!isdigit((unsigned char)cro[i])) return 0;
+    }
+
+    return 1;
+}
+//validação de campo vazio, CRO/email/senha estruturados 
+int validar_cadastro(const char *nome, const char *cro, const char *email, const char *senha){
+    if (strlen(nome)==0){
+        printf ("Insira um nome válido\n");
+        return 0;
+    }
+
+    if (!validar_cro(cro)) {   
+        printf("Insira um CRO válido\n");
+        return 0;
+    }
+
+    return 1;
+
+}
