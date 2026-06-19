@@ -10,6 +10,8 @@ src/gui/callbacks/eventos_de_janelas.c
 src/gui/callbacks/eventos_de_janelas.h
 src/services/back.c 
 src/services/back.h
+src/persistence/persistence.c
+src/persistence/persistence.h
 src/main.c
 )
 
