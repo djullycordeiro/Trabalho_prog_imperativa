@@ -5,6 +5,12 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(${PROJECT_NAME} 
 src/gui/telas/front.c
+src/gui/telas/cadastro_doutor.c
+src/gui/telas/cadastro_paciente.c
+src/gui/telas/home_logado.c
+src/gui/telas/perfil_paciente.c
+src/gui/telas/pesquisa_pacientes.c
+src/gui/telas/login.c
 src/gui/telas/front.h 
 src/gui/callbacks/eventos_de_janelas.c
 src/gui/callbacks/eventos_de_janelas.h
