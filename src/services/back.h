@@ -50,6 +50,8 @@ validar_cadastro - Valida dados de cadastro de novo doutor
 Retorna: 1 se valido, 0 se invalido
 */
 int validar_cadastro(const char *nome, const char *cro, const char *email, const char *senha);
+// declarando existência
+int validar_cro(const char *cro);
 
 
 
