@@ -53,7 +53,7 @@ int validar_cadastro(const char *nome, const char *cro, const char *email, const
 // declarando existência
 int validar_cro(const char *cro);
 
-int validarEmail(const char *email)
+int validarEmail(const char *email); 
 
 
 #endif
