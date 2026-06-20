@@ -87,7 +87,7 @@ mingw32-make
 ProjetoPI-FOP.exe
 ```
 
-### Ninja (Giulia)
+### Ninja (Giulia e Djully)
 ```bash
 mkdir build
 cd build
