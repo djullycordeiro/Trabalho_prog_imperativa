@@ -68,7 +68,7 @@ int validarEmail(const char *email) {
         return 0; // Não contém '.' após o '@'
 
     }   
- 
+}
 
 //função pra validar o CRO, evitando inserts 
 int validar_cro(const char *cro) {
