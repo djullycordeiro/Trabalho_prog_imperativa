@@ -516,9 +516,9 @@ void activate (GtkApplication *app, gpointer user_data){
     // Garante a liberação de memória quando a janela fechar
     g_object_set_data_full(G_OBJECT(window), "dados_app", dados, g_free);
 
-    gtk_window_present(GTK_WINDOW(window)); // login desativado para testes
-    //abrir_tela_ala_do_paciente(NULL, NULL);
-    gtk_window_present (GTK_WINDOW (window));
+    //gtk_window_present(GTK_WINDOW(window)); // login desativado para testes
+    abrir_tela_ala_do_paciente(NULL, NULL);
+    //gtk_window_present (GTK_WINDOW (window));
 }
     
 
