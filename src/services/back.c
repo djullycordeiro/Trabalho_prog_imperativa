@@ -41,3 +41,34 @@ void verificar_confirmacao_de_login(){
     */
     return;
 }
+
+
+
+int validarEmail(const char *email) {
+
+    char *arroba = strchr(email, '@'); // strchr retorna um ponteiro para a primeira ocorrência do caractere '@' na string email
+  
+    if (arroba == NULL) {
+        return 0; // Não contém '@'
+    }
+
+    if (arroba == email) {
+        return 0; // '@' está no início da string
+    }
+
+    if (*(arroba + 1) ) {
+        return 0; // '@' está no final da string
+    }
+
+    if (strchr(arroba + 1, '@') != NULL) {
+        return 0; // Contém mais de um '@'
+    }
+
+    if (strchr(arroba + 1, '.') == NULL) {
+        return 0; // Não contém '.' após o '@'
+
+    }   
+ 
+
+
+}
