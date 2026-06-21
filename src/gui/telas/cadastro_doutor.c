@@ -8,33 +8,30 @@ abrir_tela_cadastro_doutor - Cria a tela de cadastro de novo doutor
 Constrói e exibe uma janela com formulário para cadastro de novo doutor
 contendo campos: nome, CRO, email e senha
 */
+
+//* TELA POPUP
+
 void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
 {
+    GtkApplication *app = GTK_APPLICATION(data);
+    
     GtkWidget *janela;
     GtkWidget *caixa;
-
+    
     GtkWidget *titulo;
     GtkWidget *subtitulo;
-
-    GtkWidget *nome;
-    GtkWidget *cro;
-    GtkWidget *email;
-    GtkWidget *senha;
-
+    
     GtkWidget *botao;
 
-    janela = gtk_window_new();
+    //nome, cro, email e senha
+    Dados_doutor *dados_doutor;
+    //aloca a memória e inicializa tudo com 0 ao invés de valores aleatórios da memória
+    dados_doutor = g_new0(Dados_doutor, 1);
 
-    gtk_window_set_title(
-        GTK_WINDOW(janela),
-        "Cadastro de Doutor"
-    );
-
-    gtk_window_set_default_size(
-        GTK_WINDOW(janela),
-        600,
-        450
-    );
+    janela = gtk_application_window_new(app);
+    dados_doutor->janela = janela;
+    gtk_window_set_title(GTK_WINDOW(janela), "Cadastro de Doutor");
+    gtk_window_set_default_size(GTK_WINDOW(janela),600,450);
 
     caixa = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
@@ -57,45 +54,48 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
     subtitulo = gtk_label_new("Preencha os dados abaixo");
     gtk_box_append(GTK_BOX(caixa), subtitulo);
 
-    nome = gtk_entry_new();
+    dados_doutor->nome = gtk_entry_new();
     gtk_entry_set_placeholder_text(
-        GTK_ENTRY(nome),
+        GTK_ENTRY(dados_doutor->nome),
         "Nome completo"
     );
-    gtk_box_append(GTK_BOX(caixa), nome);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->nome);
     
-    cro = gtk_entry_new();
+    dados_doutor->cro = gtk_entry_new();
     gtk_entry_set_placeholder_text(
-        GTK_ENTRY(cro),
+        GTK_ENTRY(dados_doutor->cro),
         "Número do CRO"
     );
-    gtk_box_append(GTK_BOX(caixa), cro);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->cro);
 
-    email = gtk_entry_new();
+    dados_doutor->email = gtk_entry_new();
     gtk_entry_set_placeholder_text(
-        GTK_ENTRY(email),
+        GTK_ENTRY(dados_doutor->email),
         "E-mail profissional"
     );
-    gtk_box_append(GTK_BOX(caixa), email);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->email);
 
-    senha = gtk_entry_new();
+    dados_doutor->senha = gtk_entry_new();
     gtk_entry_set_placeholder_text(
-        GTK_ENTRY(senha),
+        GTK_ENTRY(dados_doutor->senha),
         "Crie uma senha"
     );
-
     gtk_entry_set_visibility(
-        GTK_ENTRY(senha),
+        GTK_ENTRY(dados_doutor->senha),
         FALSE
     );
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->senha);
 
-    gtk_box_append(
-        GTK_BOX(caixa),
-        senha
-    );
-
+    // Botão para confirmar login
     botao = gtk_button_new_with_label(
         "Cadastrar"
+    );
+    // Conecta o evento de clique ao callback de validação de login
+    g_signal_connect(
+        botao, 
+        "clicked", 
+        G_CALLBACK(clicar_botao_cadastrar_doutor), 
+        dados_doutor
     );
 
     gtk_box_append(

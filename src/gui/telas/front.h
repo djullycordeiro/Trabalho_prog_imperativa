@@ -2,6 +2,9 @@
 #define FRONT_H
 
 #include <gtk/gtk.h>
+#include <string.h>
+#include "../callbacks/eventos_de_janelas.h"
+#include "../../services/back.h"
 
 //Estrutura para armazenar widgets de entrada de dados (LOGIN)
 typedef struct {

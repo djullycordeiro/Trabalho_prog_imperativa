@@ -1,7 +1,19 @@
 #include "front.h"
 
+/**
+abrir_tela_cadastro_paciente - Cria a tela de cadastro de novo paciente
+@widget: widget que disparou o evento
+@data: dados passados ao callback
+
+Constrói e exibe uma janela com formulário para cadastro de novo doutor
+contendo campos: nome, data de nascimento, CoA, CoGn, AFAI
+*/
+
+//* TELA POPUP
 void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
 {
+    GtkApplication *app = GTK_APPLICATION(data);
+
     GtkWidget *janela;
     GtkWidget *caixa;
     
@@ -19,7 +31,7 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     GtkWidget *botao_salvar;
     GtkWidget *botao_voltar;
 
-    janela = gtk_window_new();
+    janela = gtk_application_window_new(app);
 
     gtk_window_set_title(
         GTK_WINDOW(janela),

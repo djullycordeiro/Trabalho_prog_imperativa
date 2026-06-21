@@ -1,6 +1,4 @@
 #include "front.h"
-#include "../callbacks/eventos_de_janelas.h"
-#include "../../services/back.h"
 
 /*
 Página inicial de abertura da aplicação
@@ -84,7 +82,7 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
 
     botao_criar_login = gtk_button_new_with_label("Criar login");
     gtk_widget_add_css_class(botao_criar_login, "flat"); // Remove o fundo e as bordas
-    g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_tela_cadastro_doutor), NULL);
+    g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_tela_cadastro_doutor), app);
     gtk_box_append(GTK_BOX(container), botao_criar_login);
     
     // Garante a liberação de memória quando a janela fechar
