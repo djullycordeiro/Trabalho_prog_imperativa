@@ -3,6 +3,12 @@
 //pesquisa no banco de pacientes
 void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
 {
+    GtkApplication *app = NULL;
+    
+    if (data != NULL && GTK_IS_APPLICATION(data)) {
+        app = GTK_APPLICATION(data);
+    }
+
     GtkWidget *janela;
     GtkWidget *caixa_principal;
     GtkWidget *titulo;
@@ -13,7 +19,11 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     GtkWidget *paciente3;
     GtkWidget *botao_voltar;
 
-    janela = gtk_window_new();
+    if (app != NULL) {
+        janela = gtk_application_window_new(app);
+    } else {
+        janela = gtk_window_new();
+    }
 
     gtk_window_set_title(GTK_WINDOW(janela), "Visualizar Pacientes");
     gtk_window_set_default_size(GTK_WINDOW(janela), 850, 450);

@@ -57,7 +57,7 @@ int validarEmail(const char *email) {
         return 0; // '@' está no início da string
     }
 
-    if (*(arroba + 1) ) {
+    if (*(arroba + 1) == '\0' ) {
         return 0; // '@' está no final da string
     }
 
@@ -69,6 +69,7 @@ int validarEmail(const char *email) {
         return 0; // Não contém '.' após o '@'
 
     }   
+    return 1;
 }
 
 // Função para validar a senha
@@ -90,7 +91,7 @@ int validarSenha(const char *senha) {
 }
 
 //função pra validar o CRO, evitando inserts 
-int validar_cro(const char *cro) {
+int validarCro(const char *cro) {
     if (strlen(cro) != 8) return 0;
     if (cro[2] != '-') return 0;
 
@@ -123,14 +124,31 @@ int validar_cro(const char *cro) {
     return 1;
 }
 //validação de campo vazio, CRO/email/senha estruturados 
-int validar_cadastro(const char *nome, const char *cro, const char *email, const char *senha){
+ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha){
     if (strlen(nome)==0){
-        printf ("Insira um nome válido\n");
+        return (ResultadoValidacao) {0, "Insira um nome válido\n"};
+    }
+
+    if (!validarCro(cro)) {   
+        return (ResultadoValidacao) {0, "Insira um CRO válido\n"};
+    }
+
+    if (!validarEmail(email)) {
+        return (ResultadoValidacao) {0, "Insira um email válido\n"};
+    }
+
+    //falta validar senha 
+
+    return (ResultadoValidacao) {1, NULL};
+
+}
+
+int validarLogin(const char *login, const char *senha){
+    if (strlen(login)==0){
         return 0;
     }
 
-    if (!validar_cro(cro)) {   
-        printf("Insira um CRO válido\n");
+    if (strlen(senha)==0){
         return 0;
     }
 
@@ -145,5 +163,6 @@ int validar_cadastro(const char *nome, const char *cro, const char *email, const
     }
 
     return 1;
-
+    return realizarLogin(login, senha);
 }
+

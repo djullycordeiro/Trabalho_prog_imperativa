@@ -12,7 +12,7 @@ Constrói e exibe a janela principal com opções de:
 */
 void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
 {
-    GtkWidget *janela;
+    GtkWidget *janela = create_window(data, "JustAllign", 600, 400);
     GtkWidget *caixa;
 
     GtkWidget *titulo;
@@ -20,18 +20,7 @@ void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
     GtkWidget *botao_visualizar;
     GtkWidget *botao_sair;
 
-    janela = gtk_window_new();
-
-    gtk_window_set_title(
-        GTK_WINDOW(janela),
-        "JustAllign"
-    );
-
-    gtk_window_set_default_size(
-        GTK_WINDOW(janela),
-        600,
-        400
-    );
+    /* title and default size set by create_window */
 
     caixa = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
@@ -52,12 +41,11 @@ void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
     gtk_box_append(GTK_BOX(caixa), titulo);
 
     botao_novo_paciente = gtk_button_new_with_label("Novo Paciente");
-
     g_signal_connect(        
         botao_novo_paciente,
         "clicked",
         G_CALLBACK(abrir_tela_cadastro_paciente),
-        NULL
+        data
     );
 
     gtk_box_append(
@@ -71,7 +59,7 @@ void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
         botao_visualizar,
         "clicked",
         G_CALLBACK(abrir_tela_pesquisar_pacientes),
-        NULL
+        data
     );
 
     gtk_box_append(
@@ -90,7 +78,7 @@ void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
         botao_sair,
         "clicked",
         G_CALLBACK(gtk_window_close),
-        activate
+        janela
     );
 
 
