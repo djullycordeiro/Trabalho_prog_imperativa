@@ -18,7 +18,7 @@ RESPONSABILIDADES:
 Este eh o cerebro da aplicacao (separado da interface).
 */
 
-void verificar_criacao_de_login(){
+void verificar_criacao_de_login(const char *nome, const char *cro, const char *email, const char *senha){
     /*
     Quando apertar o botão "cadastrar" essa função vai ser chamada
     A função vai verificar se o cadastro está válido no sistema:
@@ -31,11 +31,11 @@ void verificar_criacao_de_login(){
 }
 
 
-void verificar_confirmacao_de_login(){
+void verificar_confirmacao_de_login(const char *login, const char *senha){
     /*
     Quando apertar o botão "confirma" da página de login essa função vai ser chamada
     A função vai verificar se existe os dados cadastrados no sistema:
-    Login (provavemente cpf)
+    Login
     Senha
 
     se não confirmar ele interrompe a criação de uma nova janela, se confirmar abre.
@@ -43,7 +43,7 @@ void verificar_confirmacao_de_login(){
     return;
 }
 
-
+// Função para validar o email
 
 int validarEmail(const char *email) {
 
@@ -57,7 +57,7 @@ int validarEmail(const char *email) {
         return 0; // '@' está no início da string
     }
 
-    if (*(arroba + 1) ) {
+    if (*(arroba + 1) == '\0' ) {
         return 0; // '@' está no final da string
     }
 
@@ -69,17 +69,33 @@ int validarEmail(const char *email) {
         return 0; // Não contém '.' após o '@'
 
     }   
+    return 1;
+}
+
+// Função para validar a senha
+int validarSenha(const char *senha) {
+    if (strlen(senha) < 8) {
+        return 0; // A senha deve ter pelo menos 8 caracteres
+    }
+
+    int temMaiuscula = 0, temMinuscula = 0, temNumero = 0, temEspecial = 0;
+
+    for (size_t i = 0; i < strlen(senha); i++) {
+        if (isupper((unsigned char)senha[i])) temMaiuscula = 1;
+        else if (islower((unsigned char)senha[i])) temMinuscula = 1;
+        else if (isdigit((unsigned char)senha[i])) temNumero = 1;
+        else temEspecial = 1;
+    }
+
+    return temMaiuscula && temMinuscula && temNumero && temEspecial;
 }
 
 //função pra validar o CRO, evitando inserts 
-int validar_cro(const char *cro) {
+int validarCro(const char *cro) {
     if (strlen(cro) != 8) return 0;
     if (cro[2] != '-') return 0;
 
-    char sigla[3];
-    sigla[0] = cro[0];
-    sigla[1] = cro[1];
-    sigla[2] = '\0';
+    char sigla[3] = {cro[0], cro[1], '\0'};
 
     const char *estados_validos[] = {
         "AC","AL","AP","AM","BA","CE","DF","ES","GO",
@@ -105,17 +121,46 @@ int validar_cro(const char *cro) {
     return 1;
 }
 //validação de campo vazio, CRO/email/senha estruturados 
-int validar_cadastro(const char *nome, const char *cro, const char *email, const char *senha){
+ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha){
     if (strlen(nome)==0){
-        printf ("Insira um nome válido\n");
-        return 0;
+        return (ResultadoValidacao) {0, "Insira um nome válido\n"};
     }
 
-    if (!validar_cro(cro)) {   
-        printf("Insira um CRO válido\n");
-        return 0;
+    if (!validarCro(cro)) {   
+        return (ResultadoValidacao) {0, "Insira um CRO válido\n"};
     }
 
-    return 1;
+    if (!validarEmail(email)) {
+        return (ResultadoValidacao) {0, "Insira um email válido\n"};
+    }
+
+    if (!validarSenha(senha)) {
+        return (ResultadoValidacao) {0, "Insira uma senha válida\n"};
+    }
+
+    return (ResultadoValidacao) {1, NULL};
 
 }
+
+int validarLogin(const char *login, const char *senha){
+    if (strlen(login)==0){
+        return 0;
+    }
+
+    if (strlen(senha)==0){
+        return 0;
+    }
+
+    if (!validarEmail(login)) {
+        printf("Insira um email válido\n");
+        return 0;
+    }
+
+    if (!validarSenha(senha)) {
+        printf("Insira uma senha válida\n");
+        return 0;
+    }
+
+    return realizarLogin(login, senha);
+}
+

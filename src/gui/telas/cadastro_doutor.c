@@ -1,4 +1,5 @@
 #include "front.h"
+#include "../callbacks/eventos_de_janelas.h"
 
 /**
 abrir_tela_cadastro_doutor - Cria a tela de cadastro de novo doutor
@@ -13,7 +14,11 @@ contendo campos: nome, CRO, email e senha
 
 void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
 {
-    GtkApplication *app = GTK_APPLICATION(data);
+    GtkApplication *app = NULL;
+    
+    if (data != NULL && GTK_IS_APPLICATION(data)) {
+        app = GTK_APPLICATION(data);
+    }
     
     GtkWidget *janela;
     GtkWidget *caixa;
@@ -28,10 +33,8 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
     //aloca a memória e inicializa tudo com 0 ao invés de valores aleatórios da memória
     dados_doutor = g_new0(Dados_doutor, 1);
 
-    janela = gtk_application_window_new(app);
+    janela = create_window(data, "Cadastro de Doutor", 600, 450);
     dados_doutor->janela = janela;
-    gtk_window_set_title(GTK_WINDOW(janela), "Cadastro de Doutor");
-    gtk_window_set_default_size(GTK_WINDOW(janela),600,450);
 
     caixa = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,

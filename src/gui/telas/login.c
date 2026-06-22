@@ -12,7 +12,7 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     GtkApplication *app = GTK_APPLICATION(user_data);
 
     GtkWidget *window;
-    GtkWidget *button;
+    GtkWidget *botao_confirmar_login;
     GtkWidget *caixa_login;
     GtkWidget *caixa_senha;
     GtkWidget *botao_criar_login;
@@ -53,12 +53,8 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     gtk_box_append(GTK_BOX(caixa_login), dados->login);
     gtk_box_append(GTK_BOX(container), caixa_login);
 
-    //mensagem de erro_login
-    dados->erro_login = gtk_label_new("Insira um endereço de login válido");
-    gtk_widget_set_visible(dados->erro_login, FALSE);
-    gtk_box_append(GTK_BOX(container), dados->erro_login);
-
-
+    
+    
     // caixa de entrada senha
     caixa_senha = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     dados->senha = gtk_entry_new();
@@ -67,17 +63,17 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     gtk_entry_set_placeholder_text(GTK_ENTRY(dados->senha), "Digite sua senha: ");
     gtk_box_append(GTK_BOX(caixa_senha), dados->senha);
     gtk_box_append(GTK_BOX(container), caixa_senha);
-
-    //mensagem de erro_senha
-    dados->erro_senha = gtk_label_new("Insira uma senha válida");
-    gtk_widget_set_visible(dados->erro_senha, FALSE);
-    gtk_box_append(GTK_BOX(container), dados->erro_senha);
+    
+    //mensagem de erro_login
+    dados->erro_login = gtk_label_new("Insira um endereço de login ou senha válidos");
+    gtk_widget_set_visible(dados->erro_login, FALSE);
+    gtk_box_append(GTK_BOX(container), dados->erro_login);
     
     // Botão para confirmar login
-    button = gtk_button_new_with_label("Confirmar");
+    botao_confirmar_login = gtk_button_new_with_label("Confirmar");
     // Conecta o evento de clique ao callback de validação de login
-    g_signal_connect(button, "clicked", G_CALLBACK(clicar_botao_confirmar_login), dados);
-    gtk_box_append(GTK_BOX(container), button);
+    g_signal_connect(botao_confirmar_login, "clicked", G_CALLBACK(clicar_botao_confirmar_login), dados);
+    gtk_box_append(GTK_BOX(container), botao_confirmar_login);
 
 
     botao_criar_login = gtk_button_new_with_label("Criar login");

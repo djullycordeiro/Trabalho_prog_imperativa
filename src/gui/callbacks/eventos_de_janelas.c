@@ -23,16 +23,22 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
     g_print("Login: %s\n", login);
     g_print("Senha: %s\n", senha);
     
-    //tratamento de entrada (campo vazio)
-    if (strlen(login)==0)
-    gtk_widget_set_visible(dados->erro_login, TRUE);
-    else 
-    gtk_widget_set_visible(dados->erro_login,FALSE);
+    // tratamento de entrada (campo vazio)
+    if (strlen(login) == 0 || strlen(senha) == 0 || realizarLogin(login, senha) == 0) {
+        gtk_widget_set_visible(dados->erro_login, TRUE);
+        return;
+    }
 
-    if (strlen(senha)==0)
-    gtk_widget_set_visible(dados->erro_senha, TRUE);
-    else 
-    gtk_widget_set_visible(dados->erro_senha, FALSE);
+    gtk_widget_set_visible(dados->erro_login, FALSE);
+
+    GtkWidget *janela_login = gtk_widget_get_ancestor(GTK_WIDGET(widget), GTK_TYPE_WINDOW);
+    GtkApplication *app = gtk_window_get_application(GTK_WINDOW(janela_login));
+
+    abrir_tela_home_doutor_logado(NULL, app);
+
+    if (janela_login) {
+        gtk_window_close(GTK_WINDOW(janela_login));
+    }
 }
 
 // Callback para o botão de cadastrar doutor
