@@ -39,8 +39,8 @@ int cadastrarPaciente(const Paciente *paciente){
         return 0;
     }
 
-    if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s\n",
-    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila
+    if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s, %d\n",
+    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila, paciente->grau_maxila
     ) < 0) {
         fclose(arquivo);
         return 0;
@@ -86,12 +86,12 @@ int listarPacientes (Paciente pacientes[]){
 
     int qnt = 0;
 
-    while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",
+    while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",
     pacientes[qnt]->nome, pacientes[qnt]->idade, pacientes[qnt]->cpf, 
     pacientes[qnt]->coa, pacientes[qnt]->cogn, pacientes[qnt]->afai, 
-    pacientes[qnt]->classificacao_maxila
+    pacientes[qnt]->classificacao_maxila, pacientes[qnt]->grau_maxila
     )!= EOF) {
-        qnt++;   
+        qnt++;  
     }
 
     fclose(arquivo);
