@@ -40,7 +40,7 @@ int cadastrarPaciente(const Paciente *paciente){
     }
 
     if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s, %d\n",
-    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila, paciente->grau_maxila
+    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila/*,paciente->grau_maxila*/
     ) < 0) {
         fclose(arquivo);
         return 0;
@@ -78,18 +78,18 @@ int realizarLogin(const char *login, const char *senha) {
     return loginSucesso; // Retorna 1 se deu certo, 0 se falhou
 }
 
-int listarPacientes (Paciente pacientes[]){
-    FILE *arquivo = fopen(caminho_usuarios, "r");
+int listarPacientes(Paciente pacientes[]){
+    FILE *arquivo = fopen(caminho_pacientes, "r");
     if (arquivo == NULL) {
         return 0;
     }
 
     int qnt = 0;
 
-    while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",
-    pacientes[qnt]->nome, pacientes[qnt]->idade, pacientes[qnt]->cpf, 
-    pacientes[qnt]->coa, pacientes[qnt]->cogn, pacientes[qnt]->afai, 
-    pacientes[qnt]->classificacao_maxila, pacientes[qnt]->grau_maxila
+    while (fscanf(arquivo, "%[^,], %[^,], %[^,], %[^,], %[^,], %[^,], %[^\n]\n",
+    pacientes[qnt].nome, pacientes[qnt].idade, pacientes[qnt].cpf, 
+    pacientes[qnt].coa, pacientes[qnt].cogn, pacientes[qnt].afai, 
+    pacientes[qnt].classificacao_maxila /*,pacientes[qnt].grau_maxila , %[^,]*/
     )!= EOF) {
         qnt++;  
     }
