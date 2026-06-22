@@ -66,6 +66,12 @@ typedef struct {
     char senha[50];
 } Doutor;
 
+//resultado da validação em 1 lugar só 
+typedef struct {
+    int valido;
+    const char *mensagem;
+} ResultadoValidacao;
+
 // Persistance: registra um novo doutor a partir de uma estrutura Doutor
 // Retorna 1 em caso de sucesso, 0 em caso de falha
 int cadastrarDoutor(const Doutor *doutor);
@@ -80,7 +86,7 @@ validar_login - Valida credenciais de login
 
 Retorna: 1 se valido, 0 se invalido
 */
-int validar_login(const char *login, const char *senha);
+int validarLogin(const char *login, const char *senha);
 
 /**
 validar_cadastro - Valida dados de cadastro de novo doutor
@@ -91,11 +97,13 @@ validar_cadastro - Valida dados de cadastro de novo doutor
 
 Retorna: 1 se valido, 0 se invalido
 */
-int validar_cadastro(const char *nome, const char *cro, const char *email, const char *senha);
+ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
 // declarando existência
-int validar_cro(const char *cro);
+
+int validarCro(const char *cro);
 
 int validarEmail(const char *email); 
+int validarSenha(const char *senha);
 
 
 #endif
