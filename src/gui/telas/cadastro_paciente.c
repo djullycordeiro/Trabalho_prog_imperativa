@@ -18,17 +18,26 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
         app = GTK_APPLICATION(data);
     }
 
+    Dados_paciente *dados_paciente;
+    //aloca a memória e inicializa tudo com 0 ao invés de valores aleatórios da memória
+    dados_paciente = g_new0(Dados_paciente, 1);
+    
+    const char *classificacoes_maxila[] = {
+        "Maxila Normal",
+        "Maxila Protuída",
+        "Maxila Retruída",
+        NULL
+    };
+    GtkStringList *lista_maxila = gtk_string_list_new(classificacoes_maxila);
+    GtkWidget *dropdown;
+    
     GtkWidget *janela = create_window(data, "Novo Paciente", 500, 500);
+    dados_paciente->janela = janela;
     GtkWidget *caixa;
     
     GtkWidget *titulo;
-    GtkWidget *nome;
-    GtkWidget *idade;
-    GtkWidget *data_de_nascimento;
-    GtkWidget *coa;
-    GtkWidget *cogn;
-    GtkWidget *afai;
 
+    
     GtkWidget *botao_arquivo;
     GtkWidget *label_arquivo;
 
@@ -55,28 +64,57 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     titulo = gtk_label_new("Cadastrar Novo Paciente");
     gtk_box_append(GTK_BOX(caixa), titulo);
 
-    nome = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(nome), "Nome do paciente");
-    gtk_box_append(GTK_BOX(caixa), nome);
+    dados_paciente->nome = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->nome), 
+        "Nome do paciente"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->nome);
 
-    data_de_nascimento = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(data_de_nascimento), "Data de nascimento");
-    gtk_box_append(GTK_BOX(caixa), data_de_nascimento);
+    dados_paciente->idade = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->idade), 
+        "Idade"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->idade);
 
-    coa = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(coa), "CoA - Comprimento da Maxila");
-    gtk_box_append(GTK_BOX(caixa), coa);
+    dados_paciente->coa = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->coa), 
+        "CoA - Comprimento da Maxila"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->coa);
 
-    cogn = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(cogn), "CoGn - Comprimento Mandibular");
-    gtk_box_append(GTK_BOX(caixa), cogn);
+    dados_paciente->cogn = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->cogn), 
+        "CoGn - Comprimento Mandibular"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->cogn);
 
-    afai = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(afai), "AFAI - Altura Facial Anterior");
-    gtk_box_append(GTK_BOX(caixa), afai);
+    dados_paciente->afai = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->afai), 
+        "AFAI - Altura Facial Anterior"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->afai);
+
+    
+    dados_paciente->classificacao_maxila = gtk_drop_down_new(
+        G_LIST_MODEL(lista_maxila),
+        NULL
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->classificacao_maxila);
 
     botao_salvar = gtk_button_new_with_label("Salvar Paciente");
     gtk_box_append(GTK_BOX(caixa), botao_salvar);
+
+    g_signal_connect(
+        botao_salvar, 
+        "clicked", 
+        G_CALLBACK(clicar_botao_cadastrar_paciente), 
+        dados_paciente
+    );
 
     botao_voltar = gtk_button_new_with_label("Voltar");
     gtk_box_append(GTK_BOX(caixa), botao_voltar);

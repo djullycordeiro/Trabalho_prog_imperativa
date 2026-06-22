@@ -11,12 +11,11 @@ Constrói e exibe a janela de login com campos para:
 - Senha
 - Botão "Confirmar" (executa validação)
 - Botão "Criar login" (abre tela de cadastro)
- */
+*/
 void activate(GtkApplication *app, gpointer user_data){
     
     abrir_tela_login(NULL, app);
 }
-    
 
 // Cria uma janela que usa GtkApplication quando disponível
 //  elimina rendundâncias de ficar usando o mesmo template pra janela toda hora

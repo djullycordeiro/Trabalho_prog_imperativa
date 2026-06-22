@@ -48,7 +48,7 @@ void verificar_confirmacao_de_login(const char *login, const char *senha){
 int validarEmail(const char *email) {
 
     char *arroba = strchr(email, '@'); // strchr retorna um ponteiro para a primeira ocorrência do caractere '@' na string email
-  
+
     if (arroba == NULL) {
         return 0; // Não contém '@'
     }
