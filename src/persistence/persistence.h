@@ -14,4 +14,6 @@ int realizarLogin(const char *login, const char *senha);
 // Salva paciente em CSV (declarado em persistence.c)
 int salvarPacienteCSV(Paciente paciente);
 
+
+
 #endif

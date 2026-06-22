@@ -14,9 +14,8 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     GtkWidget *titulo;
     GtkWidget *cabecalho;
     GtkWidget *lista;
-    GtkWidget *paciente1;
-    GtkWidget *paciente2;
-    GtkWidget *paciente3;
+    
+    GtkWidget *botao_paciente;
     GtkWidget *botao_voltar;
 
     if (app != NULL) {
@@ -46,32 +45,29 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     lista = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
     gtk_box_append(GTK_BOX(caixa_principal), lista);
 
-    paciente1 = gtk_button_new_with_label(
-        "Jefferson Junior | 16/06/2009 | 123.456.789-00 | CoA: 125 | CoGn: 79 | AFAI: 129"
-    );
+    for (int i = 0; i<qtd; i++){
+        char resumo_paciente[200];
 
-    g_signal_connect(
-        paciente1,
-        "clicked",
-        G_CALLBACK(abrir_tela_perfil_paciente),
-        NULL
-    );
+        sprintf(
+            resumo_paciente, 
+            "%s | Idade: %s | CPF: %s ",
+            paciente[i].nome,
+            paciente[i].idade,
+            paciente[i].cpf,
+        );
 
-    gtk_box_append(GTK_BOX(lista), paciente1);
+        botao_paciente = gtk_button_new_with_label(resumo_paciente);
+        
+        g_signal_connect(
+            botao_paciente,
+            "clicked",
+            G_CALLBACK(abrir_tela_perfil_paciente),
+            NULL
+        );
 
-    paciente2 = gtk_button_new_with_label(
-        "Maria Souza | 22/03/2008 | 987.654.321-00 | CoA: 118 | CoGn: 75 | AFAI: 122"
-    );
-
-    g_signal_connect(
-        paciente2,
-        "clicked",
-        G_CALLBACK(abrir_tela_perfil_paciente),
-        NULL
-    );
-
-    gtk_box_append(GTK_BOX(lista), paciente2);
-
+        gtk_box_append(GTK_BOX(lista), botao_paciente);
+    }
+    /*
     paciente3 = gtk_button_new_with_label(
         "João Silva | 10/11/2007 | 456.789.123-00 | CoA: 121 | CoGn: 77 | AFAI: 126"
     );
@@ -84,6 +80,7 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     );
 
     gtk_box_append(GTK_BOX(lista), paciente3);
+    */
 
     botao_voltar = gtk_button_new_with_label("Voltar");
     gtk_box_append(GTK_BOX(caixa_principal), botao_voltar);
