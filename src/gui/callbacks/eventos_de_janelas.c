@@ -80,6 +80,7 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
 
     const gchar *nome = gtk_editable_get_text(GTK_EDITABLE(dados->nome));
     const gchar *idade = gtk_editable_get_text(GTK_EDITABLE(dados->idade));
+    const gchar *cpf = gtk_editable_get_text(GTK_EDITABLE(dados->cpf));
     const gchar *coa = gtk_editable_get_text(GTK_EDITABLE(dados->coa));
     const gchar *cogn = gtk_editable_get_text(GTK_EDITABLE(dados->cogn));
     const gchar *afai = gtk_editable_get_text(GTK_EDITABLE(dados->afai));
@@ -92,8 +93,9 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
 
     const char *classificacao_maxila = gtk_string_object_get_string(obj);
 
-    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
+    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(cpf) == 0 || strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
+
         return;
     }
 
@@ -106,6 +108,8 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     novo.nome[sizeof(novo.nome)-1] = '\0';
     strncpy(novo.idade, idade, sizeof(novo.idade)-1);
     novo.idade[sizeof(novo.idade)-1] = '\0';
+    strncpy(novo.cpf, cpf, sizeof(novo.cpf)-1);
+    novo.cpf[sizeof(novo.cpf)-1] = '\0';
     strncpy(novo.coa, coa, sizeof(novo.coa)-1);
     novo.coa[sizeof(novo.coa)-1] = '\0';
     strncpy(novo.cogn, cogn, sizeof(novo.cogn)-1);

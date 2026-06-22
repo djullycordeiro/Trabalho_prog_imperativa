@@ -120,6 +120,7 @@ int validarCro(const char *cro) {
 
     return 1;
 }
+
 //validação de campo vazio, CRO/email/senha estruturados 
 ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha){
     if (strlen(nome)==0){

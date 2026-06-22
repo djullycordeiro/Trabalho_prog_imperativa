@@ -16,7 +16,7 @@ int cadastrarDoutor(const Doutor *doutor) {
         return 0;
     }
 
-    if (fprintf(arquivo, "%s,%s,%s,%s\n", 
+    if (fprintf(arquivo, "%s, %s, %s, %s\n", 
         doutor->nome, doutor->senha, doutor->email, doutor->cro
     ) < 0) {
         fclose(arquivo);
@@ -39,8 +39,8 @@ int cadastrarPaciente(const Paciente *paciente){
         return 0;
     }
 
-    if (fprintf(arquivo, "%s,%s,%s,%s,%s,%s\n",
-    paciente->nome, paciente->idade, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila
+    if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s\n",
+    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila
     ) < 0) {
         fclose(arquivo);
         return 0;
@@ -77,3 +77,4 @@ int realizarLogin(const char *login, const char *senha) {
 
     return loginSucesso; // Retorna 1 se deu certo, 0 se falhou
 }
+

@@ -14,7 +14,8 @@ Constrói e exibe a janela de login com campos para:
 */
 void activate(GtkApplication *app, gpointer user_data){
     
-    abrir_tela_login(NULL, app);
+    //abrir_tela_login(NULL, app);
+    abrir_tela_cadastro_paciente(NULL, app);
 }
 
 // Cria uma janela que usa GtkApplication quando disponível
