@@ -31,16 +31,16 @@ typedef struct {
 } Dados_paciente;
 
 //activate - Tela de login da aplicacao
-void activate (GtkApplication *app, gpointer user_data);
+void activate(GtkApplication *app, gpointer user_data);
 
 //abrir_tela_cadastro_doutor - Tela de cadastro de novo doutor
 void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data);
 
-//abrir_tela_ala_do_paciente - Tela principal (menu de pacientes)
-void abrir_tela_ala_do_paciente(GtkWidget *widget, gpointer data);
+//abrir_tela_home_doutor_logado - Tela principal (menu de pacientes)
+void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data);
 
-//abrir_tela_novo_paciente - Tela de cadastro de novo paciente (subir arquivos)
-void abrir_tela_novo_paciente(GtkWidget *widget, gpointer data);
+//abrir_tela_cadastro_paciente - Tela de cadastro de novo paciente (subir arquivos)
+void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data);
 
 //abrir_tela_cadastro_paciente - Tela de cadastro de novo paciente
 void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data);

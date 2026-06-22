@@ -1,7 +1,6 @@
 #include <gtk/gtk.h>
 #include "front.h"
 
-
 /**
 activate - Cria a tela inicial de login da aplicação
 @app: aplicação GTK
@@ -13,13 +12,7 @@ Constrói e exibe a janela de login com campos para:
 - Botão "Confirmar" (executa validação)
 - Botão "Criar login" (abre tela de cadastro)
  */
-void activate (GtkApplication *app, gpointer user_data){
-    /*
-    Página inicial de abertura da aplicação
-    Abre uma página de login com opções de:
-        - Criar conta
-        - Fazer Login
-    */
+void activate(GtkApplication *app, gpointer user_data){
     
     abrir_tela_login(NULL, app);
 }
