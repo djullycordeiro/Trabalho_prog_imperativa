@@ -43,7 +43,7 @@ void verificar_confirmacao_de_login(){
     return;
 }
 
-
+// Função para validar o email
 
 int validarEmail(const char *email) {
 
@@ -69,6 +69,24 @@ int validarEmail(const char *email) {
         return 0; // Não contém '.' após o '@'
 
     }   
+}
+
+// Função para validar a senha
+int validarSenha(const char *senha) {
+    if (strlen(senha) < 8) {
+        return 0; // A senha deve ter pelo menos 8 caracteres
+    }
+
+    int temMaiuscula = 0, temMinuscula = 0, temNumero = 0, temEspecial = 0;
+
+    for (size_t i = 0; i < strlen(senha); i++) {
+        if (isupper((unsigned char)senha[i])) temMaiuscula = 1;
+        else if (islower((unsigned char)senha[i])) temMinuscula = 1;
+        else if (isdigit((unsigned char)senha[i])) temNumero = 1;
+        else temEspecial = 1;
+    }
+
+    return temMaiuscula && temMinuscula && temNumero && temEspecial;
 }
 
 //função pra validar o CRO, evitando inserts 
@@ -113,6 +131,16 @@ int validar_cadastro(const char *nome, const char *cro, const char *email, const
 
     if (!validar_cro(cro)) {   
         printf("Insira um CRO válido\n");
+        return 0;
+    }
+
+    if (!validarEmail(email)) {
+        printf("Insira um email válido\n");
+        return 0;
+    }
+
+    if (!validarSenha(senha)) {
+        printf("Insira uma senha válida\n");
         return 0;
     }
 
