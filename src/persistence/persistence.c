@@ -63,7 +63,7 @@ int realizarLogin(const char *login, const char *senha) {
     int loginSucesso = 0;
 
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]\n",
-         usuarioLido.nome, usuarioLido.senha, usuarioLido.email, usuarioLido.cro
+        usuarioLido.nome, usuarioLido.senha, usuarioLido.email, usuarioLido.cro
         )!= EOF) {
 
         // Compara se o CRO e a senha digitados batem com a linha atual do arquivo

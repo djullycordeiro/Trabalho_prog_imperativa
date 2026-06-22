@@ -83,10 +83,16 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     const gchar *coa = gtk_editable_get_text(GTK_EDITABLE(dados->coa));
     const gchar *cogn = gtk_editable_get_text(GTK_EDITABLE(dados->cogn));
     const gchar *afai = gtk_editable_get_text(GTK_EDITABLE(dados->afai));
-    const gchar *classificacao_maxila = gtk_editable_get_text(GTK_EDITABLE(dados->classificacao_maxila));
+    GtkStringObject *obj =
+        GTK_STRING_OBJECT(
+            gtk_drop_down_get_selected_item(
+                GTK_DROP_DOWN(dados->classificacao_maxila)
+            )
+        );
 
+    const char *classificacao_maxila = gtk_string_object_get_string(obj);
 
-    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0 || strlen(classificacao_maxila) == 0) {
+    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
         return;
     }
