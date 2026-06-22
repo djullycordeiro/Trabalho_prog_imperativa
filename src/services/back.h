@@ -103,6 +103,7 @@ ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char
 int validarCro(const char *cro);
 
 int validarEmail(const char *email); 
+
 int validarSenha(const char *senha);
 
 

@@ -18,7 +18,7 @@ RESPONSABILIDADES:
 Este eh o cerebro da aplicacao (separado da interface).
 */
 
-void verificar_criacao_de_login(){
+void verificar_criacao_de_login(const char *nome, const char *cro, const char *email, const char *senha){
     /*
     Quando apertar o botão "cadastrar" essa função vai ser chamada
     A função vai verificar se o cadastro está válido no sistema:
@@ -31,11 +31,11 @@ void verificar_criacao_de_login(){
 }
 
 
-void verificar_confirmacao_de_login(){
+void verificar_confirmacao_de_login(const char *login, const char *senha){
     /*
     Quando apertar o botão "confirma" da página de login essa função vai ser chamada
     A função vai verificar se existe os dados cadastrados no sistema:
-    Login (provavemente cpf)
+    Login
     Senha
 
     se não confirmar ele interrompe a criação de uma nova janela, se confirmar abre.
@@ -95,10 +95,7 @@ int validarCro(const char *cro) {
     if (strlen(cro) != 8) return 0;
     if (cro[2] != '-') return 0;
 
-    char sigla[3];
-    sigla[0] = cro[0];
-    sigla[1] = cro[1];
-    sigla[2] = '\0';
+    char sigla[3] = {cro[0], cro[1], '\0'};
 
     const char *estados_validos[] = {
         "AC","AL","AP","AM","BA","CE","DF","ES","GO",
@@ -137,7 +134,9 @@ ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char
         return (ResultadoValidacao) {0, "Insira um email válido\n"};
     }
 
-    //falta validar senha 
+    if (!validarSenha(senha)) {
+        return (ResultadoValidacao) {0, "Insira uma senha válida\n"};
+    }
 
     return (ResultadoValidacao) {1, NULL};
 
@@ -152,7 +151,7 @@ int validarLogin(const char *login, const char *senha){
         return 0;
     }
 
-    if (!validarEmail(email)) {
+    if (!validarEmail(login)) {
         printf("Insira um email válido\n");
         return 0;
     }
@@ -162,7 +161,6 @@ int validarLogin(const char *login, const char *senha){
         return 0;
     }
 
-    return 1;
     return realizarLogin(login, senha);
 }
 
