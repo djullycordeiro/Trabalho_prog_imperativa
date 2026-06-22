@@ -9,7 +9,7 @@ int cadastrarDoutor(const Doutor *doutor);
 
 int cadastrarPaciente(const Paciente *paciente);
 
-int realizarLogin();
+int realizarLogin(const char *login, const char *senha);
 
 // Salva paciente em CSV (declarado em persistence.c)
 int salvarPacienteCSV(Paciente paciente);

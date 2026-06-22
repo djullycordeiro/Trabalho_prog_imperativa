@@ -1,8 +1,24 @@
 #include "front.h"
 
+/**
+abrir_tela_cadastro_paciente - Cria a tela de cadastro de novo paciente
+@widget: widget que disparou o evento
+@data: dados passados ao callback
+
+Constrói e exibe uma janela com formulário para cadastro de novo doutor
+contendo campos: nome, data de nascimento, CoA, CoGn, AFAI
+*/
+
+//* TELA POPUP
 void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
 {
-    GtkWidget *janela;
+    GtkApplication *app = NULL;
+    
+    if (data != NULL && GTK_IS_APPLICATION(data)) {
+        app = GTK_APPLICATION(data);
+    }
+
+    GtkWidget *janela = create_window(data, "Novo Paciente", 500, 500);
     GtkWidget *caixa;
     
     GtkWidget *titulo;
@@ -19,18 +35,7 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     GtkWidget *botao_salvar;
     GtkWidget *botao_voltar;
 
-    janela = gtk_window_new();
-
-    gtk_window_set_title(
-        GTK_WINDOW(janela),
-        "Novo Paciente"
-    );
-
-    gtk_window_set_default_size(
-        GTK_WINDOW(janela),
-        500,
-        500
-    );
+    /* title and default size set by create_window */
 
     caixa = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
@@ -69,12 +74,6 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     afai = gtk_entry_new();
     gtk_entry_set_placeholder_text(GTK_ENTRY(afai), "AFAI - Altura Facial Anterior");
     gtk_box_append(GTK_BOX(caixa), afai);
-
-    label_arquivo = gtk_label_new("Nenhum arquivo selecionado");
-    gtk_box_append(GTK_BOX(caixa), label_arquivo);
-
-    botao_arquivo = gtk_button_new_with_label("Selecionar arquivo");
-    gtk_box_append(GTK_BOX(caixa), botao_arquivo);
 
     botao_salvar = gtk_button_new_with_label("Salvar Paciente");
     gtk_box_append(GTK_BOX(caixa), botao_salvar);
