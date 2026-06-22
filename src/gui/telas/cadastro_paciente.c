@@ -30,13 +30,12 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     };
     GtkStringList *lista_maxila = gtk_string_list_new(classificacoes_maxila);
     GtkWidget *dropdown;
-    
+
     GtkWidget *janela = create_window(data, "Novo Paciente", 500, 500);
     dados_paciente->janela = janela;
-    GtkWidget *caixa;
-    
-    GtkWidget *titulo;
 
+    GtkWidget *caixa;    
+    GtkWidget *titulo;
     
     GtkWidget *botao_arquivo;
     GtkWidget *label_arquivo;
@@ -77,6 +76,13 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
         "Idade"
     );
     gtk_box_append(GTK_BOX(caixa), dados_paciente->idade);
+    
+    dados_paciente->cpf = gtk_entry_new();
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(dados_paciente->cpf), 
+        "CPF"
+    );
+    gtk_box_append(GTK_BOX(caixa), dados_paciente->cpf);
 
     dados_paciente->coa = gtk_entry_new();
     gtk_entry_set_placeholder_text(

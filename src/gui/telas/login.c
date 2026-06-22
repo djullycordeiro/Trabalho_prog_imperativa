@@ -49,12 +49,10 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     // caixa de entrada login
     caixa_login = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     dados->login = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(dados->login), "Digite seu login: ");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(dados->login), "Digite seu CRO: ");
     gtk_box_append(GTK_BOX(caixa_login), dados->login);
     gtk_box_append(GTK_BOX(container), caixa_login);
 
-    
-    
     // caixa de entrada senha
     caixa_senha = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     dados->senha = gtk_entry_new();

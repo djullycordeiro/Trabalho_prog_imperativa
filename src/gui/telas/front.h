@@ -26,6 +26,7 @@ typedef struct {
 typedef struct {
     GtkWidget *nome;
     GtkWidget *idade;
+    GtkWidget *cpf;
     GtkWidget *coa;
     GtkWidget *cogn;
     GtkWidget *afai;

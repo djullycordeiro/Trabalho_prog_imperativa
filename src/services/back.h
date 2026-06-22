@@ -54,6 +54,7 @@ static const LinhaMcNamara TABELA_MCNAMARA[] = {
 typedef struct {
     char nome[100];
     char idade[4];
+    char cpf[20];
     char coa[4];
     char cogn[4];
     char afai[4];
