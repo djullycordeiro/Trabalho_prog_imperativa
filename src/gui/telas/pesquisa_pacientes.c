@@ -25,7 +25,6 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
         janela = gtk_window_new();
     }
     
-    
     Paciente paciente[100];
     int quantidade = listarPacientes(paciente);
     
