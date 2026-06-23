@@ -44,7 +44,6 @@ void verificar_confirmacao_de_login(const char *login, const char *senha){
 }
 
 // Função para validar o email
-
 int validarEmail(const char *email) {
 
     char *arroba = strchr(email, '@'); // strchr retorna um ponteiro para a primeira ocorrência do caractere '@' na string email
@@ -92,8 +91,8 @@ int validarSenha(const char *senha) {
 
 //função pra validar o CRO, evitando inserts 
 int validarCro(const char *cro) {
-    if (strlen(cro) != 8) return 0;
-    if (cro[2] != '-') return 0;
+    if (strlen(cro) != 8) return 0; //validação do tamanho XX-XXXXX
+    if (cro[2] != '-') return 0; // validação do formato
 
     char sigla[3] = {cro[0], cro[1], '\0'};
 
@@ -102,7 +101,7 @@ int validarCro(const char *cro) {
         "MA","MT","MS","MG","PA","PB","PR","PE","PI",
         "RJ","RN","RS","RO","RR","SC","SP","SE","TO"
     };
-
+    //procura se a sigla corresponde a um estado que existe
     int sigla_valida = 0;
     for (int i = 0; i < 27; i++) {
         if (strcmp(sigla, estados_validos[i]) == 0) {
@@ -113,7 +112,7 @@ int validarCro(const char *cro) {
 
     if (!sigla_valida) return 0;
 
-
+    //analisa se digitaram numeros depois do hifen 
     for (int i = 3; i < 8; i++) {
         if (!isdigit((unsigned char)cro[i])) return 0;
     }
@@ -124,7 +123,7 @@ int validarCro(const char *cro) {
 //validação de campo vazio, CRO/email/senha estruturados 
 ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
     ResultadoCadastro resultado;
-
+    //precisa adicionar um validar nome pra evitar inserts
     resultado.nome = (strlen(nome) == 0) ? "Insira um nome válido" : NULL;
     resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
     resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
@@ -136,8 +135,9 @@ ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char 
 ResultadoLogin validarLogin(const char *cro, const char *senha) {
     ResultadoLogin resultado;
 
-    resultado.cro = (strlen(cro) == 0 || !validarCro(cro)) ? "Insira um CRO válido" : NULL;
-    resultado.senha = (strlen(senha) == 0) ? "Insira uma senha válida" : NULL;
+    //checa formatação do cro e senha antes de procurar se o login existe
+    resultado.cro = (!validarCro(cro)) ? "Insira um CRO válido" : NULL; 
+    resultado.senha = (!validarSenha(senha)) ? "Insira uma senha válida" : NULL; 
     resultado.autenticacao = NULL;
 
     // só verifica no arquivo se o formato já tiver ok

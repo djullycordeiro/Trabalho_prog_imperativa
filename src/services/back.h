@@ -69,6 +69,7 @@ typedef struct {
     int grau_maxila;
 } Paciente;
 
+//estrutura pra armezenar dados do Doutor 
 typedef struct {
     char nome[100];
     char cro[20];
@@ -76,7 +77,7 @@ typedef struct {
     char senha[50];
 } Doutor;
 
-//resultado da validação
+//resultado da validação do cadastro
 typedef struct {
     const char *nome;   
     const char *cro;
@@ -86,6 +87,7 @@ typedef struct {
 
 ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
 
+//resultado da validação do login
 typedef struct {
     const char *cro;
     const char *senha;
