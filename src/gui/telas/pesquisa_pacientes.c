@@ -29,7 +29,7 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     int quantidade = listarPacientes(paciente);
     
     gtk_window_set_title(GTK_WINDOW(janela), "Visualizar Pacientes");
-    gtk_window_set_default_size(GTK_WINDOW(janela), 850, 450);
+    gtk_window_set_default_size(GTK_WINDOW(janela), 800, 450);
     
     caixa_principal = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
     
@@ -71,6 +71,10 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     for (int i = 0; i<quantidade; i++){
         char resumo_paciente[200];
 
+        //usado para saber qual perfil paciente gerar
+        Paciente *paciente_clicado = g_new(Paciente, 1);
+        *paciente_clicado = paciente[i];
+
         sprintf(
             resumo_paciente, 
             "%s | Idade: %s | CPF: %s ",
@@ -85,7 +89,7 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
             botao_paciente,
             "clicked",
             G_CALLBACK(abrir_tela_perfil_paciente),
-            NULL
+            paciente_clicado
         );
 
         gtk_box_append(GTK_BOX(lista), botao_paciente);
