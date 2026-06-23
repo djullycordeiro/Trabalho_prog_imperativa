@@ -12,30 +12,34 @@ Constrói e exibe a janela principal com opções de:
 */
 void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
 {
-    GtkWidget *janela = create_window(data, "JustAllign", 600, 400);
+    GtkWidget *janela = create_window(data, "JustAllign", 600, 500);
     GtkWidget *caixa;
 
     GtkWidget *titulo;
     GtkWidget *botao_novo_paciente;
     GtkWidget *botao_visualizar;
     GtkWidget *botao_sair;
+    GtkWidget *upe;
 
-    /* title and default size set by create_window */
-
+    
     caixa = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
         15
     );
-
-    gtk_widget_set_margin_top(caixa, 40);
-    gtk_widget_set_margin_bottom(caixa, 40);
-    gtk_widget_set_margin_start(caixa, 40);
-    gtk_widget_set_margin_end(caixa, 40);
+    
+    gtk_widget_set_margin_top(caixa, 60);
+    gtk_widget_set_margin_bottom(caixa, 60);
+    gtk_widget_set_margin_start(caixa, 60);
+    gtk_widget_set_margin_end(caixa, 60);
 
     gtk_window_set_child(
         GTK_WINDOW(janela),
         caixa
     );
+    
+    upe = gtk_image_new_from_file("../img/upeim1.png");
+    gtk_widget_set_halign(upe, GTK_ALIGN_CENTER);
+    gtk_box_append(GTK_BOX(caixa), upe);
 
     titulo = gtk_label_new("Menu Principal");
     gtk_box_append(GTK_BOX(caixa), titulo);
