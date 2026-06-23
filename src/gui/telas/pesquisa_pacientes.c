@@ -29,7 +29,7 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     int quantidade = listarPacientes(paciente);
     
     gtk_window_set_title(GTK_WINDOW(janela), "Visualizar Pacientes");
-    gtk_window_set_default_size(GTK_WINDOW(janela), 850, 450);
+    gtk_window_set_default_size(GTK_WINDOW(janela), 800, 450);
     
     caixa_principal = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
     
