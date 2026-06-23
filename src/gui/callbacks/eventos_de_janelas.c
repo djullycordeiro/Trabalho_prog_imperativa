@@ -120,3 +120,33 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
         g_print("Erro ao cadastrar Paciente.\n");
     }
 }
+
+void clicar_botao_salvar_comentario(GtkWidget *widget, gpointer user_data){
+    DadosComentario *dados = user_data;
+    DadosComentario comentario;
+
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(dados->comentario_widget));
+
+    GtkTextIter inicio, fim;
+
+    gtk_text_buffer_get_start_iter(buffer, &inicio);
+    gtk_text_buffer_get_end_iter(buffer, &fim);
+
+    char *texto = gtk_text_buffer_get_text(
+        buffer,
+        &inicio,
+        &fim,
+        FALSE
+    );
+
+    strncpy(comentario.comentarioD, texto, sizeof(comentario.comentarioD)-1);
+    comentario.comentarioD[sizeof(comentario.comentarioD)-1] = '\0';
+    strncpy(comentario.cpf, dados->cpf, sizeof(comentario.cpf)-1);
+    comentario.cpf[sizeof(comentario.cpf)-1] = '\0';
+
+    if (salvarComentario(&comentario)) g_print("Comentário salvo!\n");
+    else g_print("Erro ao salvar comentário.\n");
+
+    g_free(texto);
+
+}

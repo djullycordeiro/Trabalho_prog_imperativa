@@ -28,4 +28,7 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data);
 // Callback para o botão de cadastro de paciente
 void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data);
 
+// Callback para salvar comentário do paciente
+void clicar_botao_salvar_comentario(GtkWidget *widget, gpointer user_data);
+
 #endif
