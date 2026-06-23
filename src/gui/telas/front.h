@@ -31,7 +31,8 @@ typedef struct {
     GtkWidget *coa;
     GtkWidget *cogn;
     GtkWidget *afai;
-    GtkWidget *classificacao_maxila;
+    GtkWidget *tipo_maxila;
+    GtkWidget *grau_maxila;
     GtkWidget *janela;
 } Dados_paciente;
 
