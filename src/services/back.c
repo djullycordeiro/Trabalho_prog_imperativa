@@ -44,6 +44,30 @@ void verificar_confirmacao_de_login(const char *login, const char *senha){
     return;
 }
 
+int validarNome(const char *nome) {
+    if (strlen(nome) == 0) {
+        return 0;
+    }
+
+    int temLetra = 0;
+
+    for (size_t i = 0; i < strlen(nome); i++) {
+        //verifica se o caractere é uma letra ou espaço, se não for retorna 0
+        if (!isalpha((unsigned char)nome[i]) && !isspace((unsigned char)nome[i])) {
+            return 0;
+        }
+        //verifica se tem pelo menos uma letra
+        if (isalpha((unsigned char)nome[i])) {
+            temLetra = 1; 
+        }
+    }
+
+    if (!temLetra) {
+        return 0; // se não achou letras, só tinha espaços, retorna 0
+    }
+
+    return 1;
+}
 // Função para validar o email
 int validarEmail(const char *email) {
 
@@ -124,8 +148,8 @@ int validarCro(const char *cro) {
 //validação de campo vazio, CRO/email/senha estruturados 
 ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
     ResultadoCadastro resultado;
-    //precisa adicionar um validar nome pra evitar inserts
-    resultado.nome = (strlen(nome) == 0) ? "Insira um nome válido" : NULL;
+    //verifica se os campos estão vazios ou inválidos, se sim, retorna a mensagem de erro correspondente
+    resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
     resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
     resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
     resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;

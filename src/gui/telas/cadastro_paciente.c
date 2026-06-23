@@ -56,15 +56,9 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
 
     /* title and default size set by create_window */
 
-    caixa_principal = gtk_box_new(
-        GTK_ORIENTATION_VERTICAL,
-        12
-    );
+    caixa_principal = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
 
-    caixa_maxila = gtk_box_new(
-        GTK_ORIENTATION_HORIZONTAL,
-        10
-    );
+    caixa_maxila = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_widget_set_hexpand(caixa_maxila, TRUE);
 
     gtk_widget_set_margin_top(caixa_principal, 30);
