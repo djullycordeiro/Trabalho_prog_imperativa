@@ -13,6 +13,7 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     GtkWidget *caixa_principal;
     GtkWidget *titulo;
     GtkWidget *cabecalho;
+    GtkWidget *scroll;
     GtkWidget *lista;
     
     GtkWidget *botao_paciente;
@@ -23,30 +24,50 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
     } else {
         janela = gtk_window_new();
     }
-
+    
+    
     Paciente paciente[100];
     int quantidade = listarPacientes(paciente);
-
+    
     gtk_window_set_title(GTK_WINDOW(janela), "Visualizar Pacientes");
     gtk_window_set_default_size(GTK_WINDOW(janela), 850, 450);
-
+    
     caixa_principal = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
-
+    
     gtk_widget_set_margin_top(caixa_principal, 30);
     gtk_widget_set_margin_bottom(caixa_principal, 30);
     gtk_widget_set_margin_start(caixa_principal, 30);
     gtk_widget_set_margin_end(caixa_principal, 30);
-
+    
     gtk_window_set_child(GTK_WINDOW(janela), caixa_principal);
-
+    
     titulo = gtk_label_new("Pacientes Cadastrados");
     gtk_box_append(GTK_BOX(caixa_principal), titulo);
+    
+    scroll = gtk_scrolled_window_new();
+    //coloca o scroll dentro da caixa principal da janela
+    gtk_box_append(GTK_BOX(caixa_principal), scroll);
 
-    cabecalho = gtk_label_new("Nome | Data de nascimento | CPF | CoA | CoGn | AFAI");
-    gtk_box_append(GTK_BOX(caixa_principal), cabecalho);
+    // Controla quando a barra de rolagem aparece
+    gtk_scrolled_window_set_policy(
+        GTK_SCROLLED_WINDOW(scroll),
+        GTK_POLICY_AUTOMATIC,
+        GTK_POLICY_AUTOMATIC
+    );
+    // Faz o scroll ocupar o espaço livre da janela 
+    gtk_widget_set_vexpand(scroll, TRUE);
+
+    GtkWidget *container_scroll = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+
+    // Coloca o container dentro do scroll
+    gtk_scrolled_window_set_child(
+        GTK_SCROLLED_WINDOW(scroll),
+        container_scroll
+    );
 
     lista = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
-    gtk_box_append(GTK_BOX(caixa_principal), lista);
+    gtk_box_append(GTK_BOX(container_scroll), lista);
+    
 
     for (int i = 0; i<quantidade; i++){
         char resumo_paciente[200];
@@ -70,20 +91,6 @@ void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
 
         gtk_box_append(GTK_BOX(lista), botao_paciente);
     }
-    /*
-    paciente3 = gtk_button_new_with_label(
-        "João Silva | 10/11/2007 | 456.789.123-00 | CoA: 121 | CoGn: 77 | AFAI: 126"
-    );
-
-    g_signal_connect(
-        paciente3,
-        "clicked",
-        G_CALLBACK(abrir_tela_perfil_paciente),
-        NULL
-    );
-
-    gtk_box_append(GTK_BOX(lista), paciente3);
-    */
 
     botao_voltar = gtk_button_new_with_label("Voltar");
     gtk_box_append(GTK_BOX(caixa_principal), botao_voltar);
