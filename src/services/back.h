@@ -133,6 +133,7 @@ validar_cadastro - Valida dados de cadastro de novo doutor
 Retorna: 1 se valido, 0 se invalido
 */
 // declarando existência
+int validarNome(const char *nome);
 
 int validarCro(const char *cro);
 
