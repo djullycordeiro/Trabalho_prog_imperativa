@@ -121,46 +121,90 @@ int validarCro(const char *cro) {
     return 1;
 }
 //validação de campo vazio, CRO/email/senha estruturados 
-ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha){
-    if (strlen(nome)==0){
-        return (ResultadoValidacao) {0, "Insira um nome válido\n"};
-    }
+ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
+    ResultadoCadastro resultado;
 
-    if (!validarCro(cro)) {   
-        return (ResultadoValidacao) {0, "Insira um CRO válido\n"};
-    }
+    resultado.nome = (strlen(nome) == 0) ? "Insira um nome válido" : NULL;
+    resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
+    resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
+    resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;
 
-    if (!validarEmail(email)) {
-        return (ResultadoValidacao) {0, "Insira um email válido\n"};
-    }
-
-    if (!validarSenha(senha)) {
-        return (ResultadoValidacao) {0, "Insira uma senha válida\n"};
-    }
-
-    return (ResultadoValidacao) {1, NULL};
-
+    return resultado;
 }
 
-int validarLogin(const char *login, const char *senha){
-    if (strlen(login)==0){
-        return 0;
+ResultadoLogin validarLogin(const char *cro, const char *senha) {
+    ResultadoLogin resultado;
+
+    resultado.cro = (strlen(cro) == 0 || !validarCro(cro)) ? "Insira um CRO válido" : NULL;
+    resultado.senha = (strlen(senha) == 0) ? "Insira uma senha válida" : NULL;
+    resultado.autenticacao = NULL;
+
+    // só verifica no arquivo se o formato já tiver ok
+    if (resultado.cro == NULL && resultado.senha == NULL) {
+        if (!realizarLogin(cro, senha)) {
+            resultado.autenticacao = "CRO ou senha incorretos";
+        }
     }
 
-    if (strlen(senha)==0){
-        return 0;
-    }
-
-    if (!validarEmail(login)) {
-        printf("Insira um email válido\n");
-        return 0;
-    }
-
-    if (!validarSenha(senha)) {
-        printf("Insira uma senha válida\n");
-        return 0;
-    }
-
-    return realizarLogin(login, senha);
+    return resultado;
 }
 
+ResultadoDiagnostico calcular_diagnostico(Paciente *p) {
+    ResultadoDiagnostico resultado;
+    int coa, cogn, afai;
+
+    sscanf(p->coa, "%d", &coa);
+    sscanf(p->cogn, "%d", &cogn);
+    sscanf(p->afai, "%d", &afai);
+
+    if (p->tipo_maxila == MAXILA_NORMAL) {
+        resultado.coa_ajustado = coa;
+    }
+    else if (p->tipo_maxila == MAXILA_PROTRUIDA) {
+        resultado.coa_ajustado = coa - p->grau_maxila;
+    }
+    else { // RETRUIDA
+        resultado.coa_ajustado = coa + p->grau_maxila;
+    }
+
+    LinhaMcNamara linha_certa;
+    int achou = 0;
+
+    for (int i = 0; i < 29; i++) {
+        if (TABELA_MCNAMARA[i].coa == resultado.coa_ajustado) {
+            linha_certa = TABELA_MCNAMARA[i];
+            achou = 1;
+            break;
+        }
+    }
+
+    if (!achou) {
+        resultado.mensagem = "CoA fora da faixa da tabela";
+        return resultado;
+    }
+
+    resultado.cogn_min_ideal = linha_certa.cogn_min;
+    resultado.cogn_max_ideal = linha_certa.cogn_max;
+    resultado.afai_min_ideal = linha_certa.afai_min;
+    resultado.afai_max_ideal = linha_certa.afai_max;
+    resultado.paciente = *p;
+    resultado.mensagem = NULL;
+
+    if (cogn >= linha_certa.cogn_min && cogn <= linha_certa.cogn_max) {
+        resultado.classificacao_cogn = "normal";
+    } else if (cogn < linha_certa.cogn_min) {
+        resultado.classificacao_cogn = "reduzido";
+    } else {
+        resultado.classificacao_cogn = "aumentado";
+    }
+
+    if (afai >= linha_certa.afai_min && afai <= linha_certa.afai_max) {
+        resultado.classificacao_afai = "normal";
+    } else if (afai < linha_certa.afai_min) {
+        resultado.classificacao_afai = "reduzido";
+    } else {
+        resultado.classificacao_afai = "aumentado";
+    }
+
+    return resultado;
+}
