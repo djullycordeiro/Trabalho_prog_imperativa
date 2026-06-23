@@ -13,6 +13,15 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     GtkWidget *botao_salvar_comentario;
     GtkWidget *botao_voltar;
 
+    Paciente *paciente = data;
+
+    const char *tipos_maxila[] = {
+        "Maxila Normal",
+        "Maxila Protuída",
+        "Maxila Retruída",
+        NULL
+    };
+
     janela = gtk_window_new();
 
     gtk_window_set_title(GTK_WINDOW(janela), "Detalhes do Paciente");
@@ -30,15 +39,24 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     titulo = gtk_label_new("Dados do Paciente");
     gtk_box_append(GTK_BOX(caixa), titulo);
 
-    dados = gtk_label_new(
-        "Nome: Jefferson Junior\n"
-        "Data de nascimento: 16/06/2009\n"
-        "CPF: 123.456.789-00\n"
-        "CoA: 125\n"
-        "CoGn: 79\n"
-        "AFAI: 129\n"
-        "Classificação: Maxila Protrusa"
+    char infoPaciente[500]; 
+
+    sprintf(infoPaciente, 
+        "Nome: %s\n"
+        "Idade: %s\n"
+        "CPF: %s\n"
+        "CoA: %s\n"
+        "CoGn: %s\n"
+        "AFAI: %s\n"
+        "Classificação Maxila: %s %d",
+        paciente->nome, paciente->idade,
+        paciente->cpf, paciente->coa,
+        paciente->cogn, paciente->afai,
+        tipos_maxila[paciente->tipo_maxila], paciente->grau_maxila
     );
+    
+
+    dados = gtk_label_new(infoPaciente);
     gtk_box_append(GTK_BOX(caixa), dados);
 
     subtitulo_comentarios = gtk_label_new("Comentários do médico sobre a evolução");
