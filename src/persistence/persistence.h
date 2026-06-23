@@ -14,4 +14,7 @@ int realizarLogin(const char *login, const char *senha);
 // Salva paciente em CSV (declarado em persistence.c)
 int salvarPacienteCSV(Paciente paciente);
 
+//cria array de struct de pacientes e conta a quantidade de pacientes salvos
+int listarPacientes(Paciente pacientes[]);
+
 #endif

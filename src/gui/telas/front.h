@@ -5,6 +5,7 @@
 #include <string.h>
 #include "../callbacks/eventos_de_janelas.h"
 #include "../../services/back.h"
+#include "../../persistence/persistence.h"
 
 //Estrutura para armazenar widgets de entrada de dados (LOGIN)
 typedef struct {
@@ -26,10 +27,12 @@ typedef struct {
 typedef struct {
     GtkWidget *nome;
     GtkWidget *idade;
+    GtkWidget *cpf;
     GtkWidget *coa;
     GtkWidget *cogn;
     GtkWidget *afai;
-    GtkWidget *classificacao_maxila;
+    GtkWidget *tipo_maxila;
+    GtkWidget *grau_maxila;
     GtkWidget *janela;
 } Dados_paciente;
 

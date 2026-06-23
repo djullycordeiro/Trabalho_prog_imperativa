@@ -78,42 +78,40 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
 void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     Dados_paciente *dados = user_data;
 
+    // aqui podemos puxar a função do cálculo dos valores ideais
+    Paciente novo;
+
     const gchar *nome = gtk_editable_get_text(GTK_EDITABLE(dados->nome));
     const gchar *idade = gtk_editable_get_text(GTK_EDITABLE(dados->idade));
+    const gchar *cpf = gtk_editable_get_text(GTK_EDITABLE(dados->cpf));
     const gchar *coa = gtk_editable_get_text(GTK_EDITABLE(dados->coa));
     const gchar *cogn = gtk_editable_get_text(GTK_EDITABLE(dados->cogn));
     const gchar *afai = gtk_editable_get_text(GTK_EDITABLE(dados->afai));
-    GtkStringObject *obj =
-        GTK_STRING_OBJECT(
-            gtk_drop_down_get_selected_item(
-                GTK_DROP_DOWN(dados->classificacao_maxila)
-            )
-        );
+    guint indice_tipo_maxila = gtk_drop_down_get_selected(GTK_DROP_DOWN(dados->tipo_maxila));
+    novo.tipo_maxila = (TipoMaxila) indice_tipo_maxila;
+    guint indice_grau_maxila = gtk_drop_down_get_selected(GTK_DROP_DOWN(dados->grau_maxila));
+    novo.grau_maxila = indice_grau_maxila;
 
-    const char *classificacao_maxila = gtk_string_object_get_string(obj);
-
-    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
+    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(cpf) == 0 || 
+    strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
+
         return;
     }
-
-    // aqui podemos puxar a função do cálculo dos valores ideais
-
-    Paciente novo;
 
     //Tratamento de strings
     strncpy(novo.nome, nome, sizeof(novo.nome)-1);
     novo.nome[sizeof(novo.nome)-1] = '\0';
     strncpy(novo.idade, idade, sizeof(novo.idade)-1);
     novo.idade[sizeof(novo.idade)-1] = '\0';
+    strncpy(novo.cpf, cpf, sizeof(novo.cpf)-1);
+    novo.cpf[sizeof(novo.cpf)-1] = '\0';
     strncpy(novo.coa, coa, sizeof(novo.coa)-1);
     novo.coa[sizeof(novo.coa)-1] = '\0';
     strncpy(novo.cogn, cogn, sizeof(novo.cogn)-1);
     novo.cogn[sizeof(novo.cogn)-1] = '\0';
     strncpy(novo.afai, afai, sizeof(novo.afai)-1);
     novo.afai[sizeof(novo.afai)-1] = '\0';
-    strncpy(novo.classificacao_maxila, classificacao_maxila, sizeof(novo.classificacao_maxila)-1);
-    novo.classificacao_maxila[sizeof(novo.classificacao_maxila)-1] = '\0';
 
     if (cadastrarPaciente(&novo)) {
         g_print("Paciente cadastrado com sucesso: %s\n", novo.nome);
