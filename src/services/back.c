@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "back.h"
 #include "../persistence/persistence.h"
@@ -148,6 +149,54 @@ ResultadoLogin validarLogin(const char *cro, const char *senha) {
     }
 
     return resultado;
+
+}
+// Função para validar o CoA
+int validar_coa (double coa) {
+    if (coa >= 80 && coa <= 108) {
+        return 1; // válido
+    } else {
+        return 0; // inválido
+    }
+}
+// Valida se um valor genérico é maior que zero
+int validar_valores_positivos (double valor) {
+    if (valor > 0) {
+        return 1; // válido
+    } else {
+        return 0; // inválido
+    }
+}
+
+// Função auxiliar para converter a string do GTK de forma segura e validar o cadastro do paciente
+ResultadoValidacao validar_dados_paciente(const char *nome, const char *coa_str, const char *idade_str) {
+
+    if (strlen(nome) == 0) {
+        return (ResultadoValidacao){0, "Nome do paciente não pode ser vazio"};
+        }
+        char *endptr;
+        double coa = strtod(coa_str, &endptr);
+
+    // Aqui vou verificar se a Conversão falhou ou se o campo tá vazio
+    if (endptr == coa_str || *endptr != '\0') {
+        return (ResultadoValidacao){0, "CoA inválido, corrija!"};
+    }
+
+    double idade = strtod(idade_str, &endptr);
+    if (endptr == idade_str || *endptr != '\0') {
+        return (ResultadoValidacao){0, "Idade inválida, corrija!"};
+    }
+
+    // Aplicando o valor positivo e o CoA válido
+    if (!validar_coa) {
+        return (ResultadoValidacao){0, "CoA fora da faixa de 80 a 108, corrija!"};
+    }
+
+    if (!validar_valores_positivos(idade)) {
+        return (ResultadoValidacao){0, "Idade deve ser maior que zero, corrija!"};
+    }
+
+    return (ResultadoValidacao){1, NULL}; // Todos os campos válidos
 }
 
 ResultadoDiagnostico calcular_diagnostico(Paciente *p) {
