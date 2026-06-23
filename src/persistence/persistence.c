@@ -1,6 +1,4 @@
-#include "../services/back.h"
-#include <string.h>
-#include <stdio.h>
+#include "persistence.h"
 
 static const char caminho_usuarios[] = "../src/data/usuarios.csv";
 static const char caminho_pacientes[] = "../src/data/pacientes.csv";
@@ -62,7 +60,7 @@ int realizarLogin(const char *login, const char *senha) {
     Doutor usuarioLido;
     int loginSucesso = 0;
 
-    while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]\n",
+    while (fscanf(arquivo, "%[^,], %[^,], %[^,], %[^\n]\n",
     usuarioLido.nome, usuarioLido.senha, usuarioLido.email, usuarioLido.cro
     )!= EOF) {
 
@@ -98,4 +96,50 @@ int listarPacientes(Paciente pacientes[]){
 
     fclose(arquivo);
     return qnt;
+}
+
+int salvarComentario(const DadosComentario *comentario_save){
+    char caminho_comentario[500];
+    sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", comentario_save->cpf);
+
+    FILE *arquivo = fopen(caminho_comentario, "w");
+    if (arquivo == NULL){
+        return 0;
+    }
+
+    if (fprintf(arquivo, "%s\n", comentario_save->comentarioD) < 0) {
+        fclose(arquivo);
+        return 0;
+    }
+
+    fclose(arquivo);
+    return 1;
+}
+
+ComentarioPuro carregarComentario(const char *cpf) {
+    char caminho_comentario[100];
+    sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", cpf);
+
+    ComentarioPuro dados;
+    dados.qtd_linhas = 0;
+
+    FILE *arquivo = fopen(caminho_comentario, "r");
+    if (arquivo == NULL) return dados;
+
+    char buffer_linha[500];
+    
+    // Enquanto houver linhas no arquivo e houver espaço no nosso array
+    while (fgets(buffer_linha, sizeof(buffer_linha), arquivo) != NULL && dados.qtd_linhas < 30) {
+        
+        // Remove o '\n' do final que o fgets traz
+        buffer_linha[strcspn(buffer_linha, "\n")] = '\0';
+
+        // Copia a string do buffer direto para a posição atual do array de strings
+        strcpy(dados.linhas[dados.qtd_linhas], buffer_linha);
+
+        dados.qtd_linhas++; // Avança para a próxima "linha do caderno"
+    }
+
+    fclose(arquivo);
+    return dados;
 }
