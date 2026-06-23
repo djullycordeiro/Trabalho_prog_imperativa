@@ -139,4 +139,13 @@ int validarEmail(const char *email);
 int validarSenha(const char *senha);
 
 
+typedef struct {
+    int valido;
+    const char *mensagem;
+} ResultadoValidacao;
+
+int validar_coa (double coa);
+int validar_valores_positivos (double valor);
+ResultadoValidacao validar_dados_paciente(const char *nome, const char *coa_str, const char *idade_str);
+
 #endif
