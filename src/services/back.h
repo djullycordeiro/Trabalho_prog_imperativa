@@ -9,14 +9,12 @@ e NAO devem conter nenhuma referencia a GTK
 
 typedef struct {
     int coa;        // Comprimento efetivo da Maxila (Co-A) em mm
-    char cogn_min; //  Comprimento efetivo da Mandibula (Cogn) min em mm
-    char cogn_max; // COGN máx ideal em mm
-    char afai_min;  // Altura Facial Anterior Inferior (AFAI) min em mm
-    char afai_max; // AFAI max ideal em mm
+    int cogn_min; //  Comprimento efetivo da Mandibula (Cogn) min em mm
+    int cogn_max; // COGN máx ideal em mm
+    int afai_min;  // Altura Facial Anterior Inferior (AFAI) min em mm
+    int afai_max; // AFAI max ideal em mm
 } LinhaMcNamara;
 
-// usem como base o da primeira linha,
-// usem a tabela que tá no readme, ela é a que foi passado nos arquivos do professor
 static const LinhaMcNamara TABELA_MCNAMARA[] = {
     //coa, cogn_min, cogn_max, afai_min, afai_max
     {80, 97, 100, 57, 58},
@@ -50,6 +48,15 @@ static const LinhaMcNamara TABELA_MCNAMARA[] = {
     {108, 141, 144, 78, 82},
 };
 
+//lista de classificações permitidas 
+typedef enum {
+
+    MAXILA_NORMAL,
+    MAXILA_PROTRUIDA,
+    MAXILA_RETRUIDA
+
+} TipoMaxila;
+
 //Estrutura para armazenar dados do paciente
 typedef struct {
     char nome[100];
@@ -58,9 +65,8 @@ typedef struct {
     char coa[4];
     char cogn[4];
     char afai[4];
-    char classificacao_maxila[50];
-    char faixa_cogn[9];
-    char faixa_afai[9];
+    TipoMaxila tipo_maxila;
+    int grau_maxila;
 } Paciente;
 
 typedef struct {
@@ -70,11 +76,36 @@ typedef struct {
     char senha[50];
 } Doutor;
 
-//resultado da validação em 1 lugar só 
+//resultado da validação
 typedef struct {
-    int valido;
+    const char *nome;   
+    const char *cro;
+    const char *email;
+    const char *senha;
+} ResultadoCadastro;
+
+ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
+
+typedef struct {
+    const char *cro;
+    const char *senha;
+    const char *autenticacao; // "CRO ou senha incorretos" ou NULL se ok
+} ResultadoLogin;
+
+// struct com os resultados do diagnostico 
+typedef struct {
+    int coa_ajustado;       // o CoA depois de aplicar o ajuste da maxila
+    int cogn_min_ideal;     // valor min faixa ideal de CoGn
+    int cogn_max_ideal;     // valor max faixa ideal de CoGn
+    int afai_min_ideal;     // valor min faixa ideal de AFAI
+    int afai_max_ideal;     // valor max faixa ideal de AFAI
+    const char *classificacao_cogn; // "reduzido" / "normal" / "aumentado"
+    const char *classificacao_afai; // "reduzido" / "normal" / "aumentado"
+    Paciente paciente;
     const char *mensagem;
-} ResultadoValidacao;
+} ResultadoDiagnostico;
+
+ResultadoDiagnostico calcular_diagnostico(Paciente *p);
 
 // Persistance: registra um novo doutor a partir de uma estrutura Doutor
 // Retorna 1 em caso de sucesso, 0 em caso de falha
@@ -87,10 +118,8 @@ int realizarLogin(const char *login, const char *senha);
 validar_login - Valida credenciais de login
 @login: string com CPF ou username
 @senha: string com a senha
-
-Retorna: 1 se valido, 0 se invalido
 */
-int validarLogin(const char *login, const char *senha);
+ResultadoLogin validarLogin(const char *cro, const char *senha);
 
 /**
 validar_cadastro - Valida dados de cadastro de novo doutor
@@ -101,7 +130,6 @@ validar_cadastro - Valida dados de cadastro de novo doutor
 
 Retorna: 1 se valido, 0 se invalido
 */
-ResultadoValidacao validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
 // declarando existência
 
 int validarCro(const char *cro);
