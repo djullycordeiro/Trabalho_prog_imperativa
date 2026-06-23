@@ -17,7 +17,7 @@ int cadastrarDoutor(const Doutor *doutor) {
     }
 
     if (fprintf(arquivo, "%s, %s, %s, %s\n", 
-        doutor->nome, doutor->senha, doutor->email, doutor->cro
+    doutor->nome, doutor->senha, doutor->email, doutor->cro
     ) < 0) {
         fclose(arquivo);
         return 0;
@@ -39,8 +39,8 @@ int cadastrarPaciente(const Paciente *paciente){
         return 0;
     }
 
-    if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s\n",
-    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila
+    if (fprintf(arquivo, "%s, %s, %s, %s, %s, %s, %s, %d\n",
+    paciente->nome, paciente->idade, paciente->cpf, paciente->coa, paciente->cogn, paciente->afai, paciente->classificacao_maxila/*,paciente->grau_maxila*/
     ) < 0) {
         fclose(arquivo);
         return 0;
@@ -63,8 +63,8 @@ int realizarLogin(const char *login, const char *senha) {
     int loginSucesso = 0;
 
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]\n",
-        usuarioLido.nome, usuarioLido.senha, usuarioLido.email, usuarioLido.cro
-        )!= EOF) {
+    usuarioLido.nome, usuarioLido.senha, usuarioLido.email, usuarioLido.cro
+    )!= EOF) {
 
         // Compara se o CRO e a senha digitados batem com a linha atual do arquivo
         if (strcmp(login, usuarioLido.cro) == 0 && strcmp(senha, usuarioLido.senha) == 0) {
@@ -78,3 +78,22 @@ int realizarLogin(const char *login, const char *senha) {
     return loginSucesso; // Retorna 1 se deu certo, 0 se falhou
 }
 
+int listarPacientes(Paciente pacientes[]){
+    FILE *arquivo = fopen(caminho_pacientes, "r");
+    if (arquivo == NULL) {
+        return 0;
+    }
+
+    int qnt = 0;
+
+    while (fscanf(arquivo, "%[^,], %[^,], %[^,], %[^,], %[^,], %[^,], %[^\n]\n",
+    pacientes[qnt].nome, pacientes[qnt].idade, pacientes[qnt].cpf, 
+    pacientes[qnt].coa, pacientes[qnt].cogn, pacientes[qnt].afai, 
+    pacientes[qnt].classificacao_maxila /*,pacientes[qnt].grau_maxila , %[^,]*/
+    )!= EOF) {
+        qnt++;  
+    }
+
+    fclose(arquivo);
+    return qnt;
+}
