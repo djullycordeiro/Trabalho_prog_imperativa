@@ -2,7 +2,10 @@
 #define EVENTOS_DE_JANELAS_H
 
 #include <gtk/gtk.h>
+#include <string.h>
 #include "../telas/front.h"
+#include "../../services/back.h"
+#include "../../persistence/persistence.h"
 
 /**
  * Callbacks (manipuladores de eventos) para widgets da interface gráfica.

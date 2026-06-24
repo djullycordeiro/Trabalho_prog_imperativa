@@ -1,8 +1,4 @@
-#include <gtk/gtk.h>
-#include <string.h>
-#include "../telas/front.h"
-#include "../../services/back.h"
-#include "../../persistence/persistence.h"
+#include "eventos_de_janelas.h"
 
 /**
 eventos_de_janelas.c - Callbacks e manipuladores de eventos da GUI
@@ -44,6 +40,7 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
 // Callback para o botão de cadastrar doutor
 void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
     Dados_doutor *dados = user_data;
+    ResultadoCadastro valida_cadastro = validarCadastro(0,0,0,0);
 
     const gchar *nome = gtk_editable_get_text(GTK_EDITABLE(dados->nome));
     const gchar *cro = gtk_editable_get_text(GTK_EDITABLE(dados->cro));
@@ -77,10 +74,10 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
 
 void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     Dados_paciente *dados = user_data;
-
+    
     // aqui podemos puxar a função do cálculo dos valores ideais
     Paciente novo;
-
+    
     const gchar *nome = gtk_editable_get_text(GTK_EDITABLE(dados->nome));
     const gchar *idade = gtk_editable_get_text(GTK_EDITABLE(dados->idade));
     const gchar *cpf = gtk_editable_get_text(GTK_EDITABLE(dados->cpf));
@@ -92,12 +89,33 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     guint indice_grau_maxila = gtk_drop_down_get_selected(GTK_DROP_DOWN(dados->grau_maxila));
     novo.grau_maxila = indice_grau_maxila;
 
-    if (strlen(nome) == 0 || strlen(idade) == 0 || strlen(cpf) == 0 || 
-    strlen(coa) == 0 || strlen(cogn) == 0 || strlen(afai) == 0) {
+    ResultadoPaciente valida_paciente = validarPaciente(nome, cpf, idade, coa, cogn, afai);
+    
+    if (valida_paciente.nome || valida_paciente.cpf || valida_paciente.idade || 
+        valida_paciente.coa || valida_paciente.cogn || valida_paciente.afai ) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
-
+        gtk_widget_set_visible(dados->erro_cadastro, TRUE);
+        if (valida_paciente.nome){
+            g_print("%s\n", valida_paciente.nome);
+            gtk_widget_set_visible(dados->erro_nome, TRUE);}
+        if (valida_paciente.cpf){
+            g_print("%s\n", valida_paciente.cpf);
+            gtk_widget_set_visible(dados->erro_cpf, TRUE);}
+        if (valida_paciente.idade){
+            g_print("%s\n", valida_paciente.idade);
+            gtk_widget_set_visible(dados->erro_idade, TRUE);}
+        if (valida_paciente.coa){
+            g_print("%s\n", valida_paciente.coa);
+            gtk_widget_set_visible(dados->erro_coa, TRUE);}
+        if (valida_paciente.cogn){
+            g_print("%s\n", valida_paciente.cogn);
+            gtk_widget_set_visible(dados->erro_cogn, TRUE);}
+        if (valida_paciente.afai){
+            g_print("%s\n", valida_paciente.afai);
+            gtk_widget_set_visible(dados->erro_afai, TRUE);}
         return;
     }
+
 
     //Tratamento de strings
     strncpy(novo.nome, nome, sizeof(novo.nome)-1);

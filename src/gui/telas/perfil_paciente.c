@@ -27,12 +27,7 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     DadosComentario *coment = g_new0(DadosComentario, 1);
     strcpy(coment->cpf, paciente->cpf);
     
-    const char *tipos_maxila[] = {
-        "Maxila Normal",
-        "Maxila Protuída",
-        "Maxila Retruída",
-        NULL
-    };
+    const char *tipos_maxila[] = {"Maxila Normal", "Maxila Protuída", "Maxila Retruída", NULL};
 
     janela = gtk_window_new();
 
@@ -50,7 +45,7 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     
     gtk_window_set_child(GTK_WINDOW(janela), caixa_principal);
 
-    gtk_widget_set_size_request(scroll_comentarios, 500,120);
+    gtk_widget_set_size_request(scroll_comentarios, 500, 120);
 
     titulo = gtk_label_new("Dados do Paciente");
     gtk_box_append(GTK_BOX(caixa_principal), titulo);
