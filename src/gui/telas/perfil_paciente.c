@@ -83,7 +83,7 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
 
     char exam_ajust_Paciente[200]; 
     sprintf(exam_ajust_Paciente, 
-        "CoA (ajustado): %d\n"
+        "CoA (ajustado): %lf\n"
         "CoGn (valor ideal): %d - %d\n"
         "Classificação CoGn: %s\n"
         "AFAI (valor ideal): %d - %d\n"
