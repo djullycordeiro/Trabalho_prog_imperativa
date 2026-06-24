@@ -189,6 +189,26 @@ int validar_coa (double coa) {
         return 0; // inválido
     }
 }
+int validarIdade(const char *idade) {
+    if (idade == NULL || strlen(idade) == 0) {
+        return 0;
+    }
+
+    for (size_t i = 0; i < strlen(idade); i++) {
+        if (!isdigit((unsigned char)idade[i])) {
+            return 0;
+        }
+    }
+
+    int valor = atoi(idade);
+    if (valor < 0 || valor > 120) {
+        return 0;
+    }
+
+    return 1;
+}
+
+
 // Valida se um valor genérico é maior que zero
 int validar_valores_positivos (double valor) {
     if (valor > 0) {
@@ -203,7 +223,7 @@ ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char 
     ResultadoCadastro resultado;
     //verifica se os campos estão vazios ou inválidos, se sim, retorna a mensagem de erro correspondente
     resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
-    resultado.cro = (!validarCro(cro) || !cro_ja_existe(cro)) ? "Insira um CRO válido" : NULL;
+    resultado.cro = (!validarCro(cro) || cro_ja_existe(cro)) ? "Insira um CRO válido" : NULL;
     resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
     resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;
 
@@ -236,7 +256,7 @@ ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char 
 
     resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
     resultado.cpf = !validarCpf(cpf) ? "Insira um CPF válido" : NULL;
-    resultado.idade = (!validar_valores_positivos(atoi(idade))) ? "Insira uma idade válida" : NULL;
+    resultado.idade = (!validarIdade(idade)) ? "Insira uma idade válida" : NULL;
     resultado.coa = (!validar_coa(atof(coa))) ? "Insira um CoA válido" : NULL;
     resultado.cogn = (!validar_valores_positivos(atoi(cogn))) ? "Insira um CoGn válido" : NULL;
     resultado.afai = (!validar_valores_positivos(atoi(afai))) ? "Insira um AFAI válido" : NULL;

@@ -153,6 +153,8 @@ int realizarLogin(const char *login, const char *senha);
 // declarando existência
 int validarNome(const char *nome);
 
+int validarIdade(const char *idade);
+
 int validarCpf(const char *cpf);
 
 int validarCro(const char *cro);
