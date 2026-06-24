@@ -19,33 +19,37 @@ RESPONSABILIDADES:
 Este eh o cerebro da aplicacao (separado da interface).
 */
 
-void verificar_criacao_de_login(const char *nome, const char *cro, const char *email, const char *senha){
-    /*
-    Quando apertar o botão "cadastrar" essa função vai ser chamada
-    A função vai verificar se o cadastro está válido no sistema:
-        - se o CRO já existe
-        - se o email já foi cadastrado
-        - se a senha é segura
-    */
+// Função para validar o nome, evitanod inserts de nomes com caracteres inválidos
+int validarNome(const char *nome) {
+    if (strlen(nome) == 0) {
+        return 0;
+    }
 
-    return;
+    int temLetra = 0;
+
+    for (size_t i = 0; i < strlen(nome); i++) {
+        //verifica se o caractere é uma letra ou espaço, se não for retorna 0
+        if (!isalpha((unsigned char)nome[i]) && !isspace((unsigned char)nome[i])) {
+            return 0;
+        }
+        //verifica se tem pelo menos uma letra
+        if (isalpha((unsigned char)nome[i])) {
+            temLetra = 1; 
+        }
+    }
+
+    if (!temLetra) {
+        return 0; // se não achou letras, só tinha espaços, retorna 0
+    }
+
+    return 1;
 }
-
-
-void verificar_confirmacao_de_login(const char *login, const char *senha){
-    /*
-    Quando apertar o botão "confirma" da página de login essa função vai ser chamada
-    A função vai verificar se existe os dados cadastrados no sistema:
-    Login
-    Senha
-
-    se não confirmar ele interrompe a criação de uma nova janela, se confirmar abre.
-    */
-    return;
-}
-
 // Função para validar o email
 int validarEmail(const char *email) {
+
+    if (strchr(email, ',') != NULL) {
+        return 0; // evita quebrar o parsing do CSV
+    }
 
     char *arroba = strchr(email, '@'); // strchr retorna um ponteiro para a primeira ocorrência do caractere '@' na string email
 
@@ -76,6 +80,10 @@ int validarEmail(const char *email) {
 int validarSenha(const char *senha) {
     if (strlen(senha) < 8) {
         return 0; // A senha deve ter pelo menos 8 caracteres
+    }
+
+    if (strchr(senha, ',') != NULL || strchr(senha, '\n') != NULL) {
+        return 0; // evita quebrar o parsing do CSV
     }
 
     int temMaiuscula = 0, temMinuscula = 0, temNumero = 0, temEspecial = 0;
@@ -121,35 +129,57 @@ int validarCro(const char *cro) {
     return 1;
 }
 
-//validação de campo vazio, CRO/email/senha estruturados 
-ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
-    ResultadoCadastro resultado;
-    //precisa adicionar um validar nome pra evitar inserts
-    resultado.nome = (strlen(nome) == 0) ? "Insira um nome válido" : NULL;
-    resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
-    resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
-    resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;
+int validarCpf(const char *cpf) {
+    if (strlen(cpf) != 11) {
+        return 0;
+    }
 
-    return resultado;
-}
-
-ResultadoLogin validarLogin(const char *cro, const char *senha) {
-    ResultadoLogin resultado;
-
-    //checa formatação do cro e senha antes de procurar se o login existe
-    resultado.cro = (!validarCro(cro)) ? "Insira um CRO válido" : NULL; 
-    resultado.senha = (!validarSenha(senha)) ? "Insira uma senha válida" : NULL; 
-    resultado.autenticacao = NULL;
-
-    // só verifica no arquivo se o formato já tiver ok
-    if (resultado.cro == NULL && resultado.senha == NULL) {
-        if (!realizarLogin(cro, senha)) {
-            resultado.autenticacao = "CRO ou senha incorretos";
+    // Verifica se todos são dígitos
+    for (int i = 0; i < 11; i++) {
+        if (!isdigit((unsigned char)cpf[i])) {
+            return 0;
         }
     }
 
-    return resultado;
+    // Evita CPFs com números repetidos
+    int iguais = 1;
+    for (int i = 1; i < 11; i++) {
+        if (cpf[i] != cpf[0]) {
+            iguais = 0;
+            break;
+        }
+    }
+    if (iguais) {
+        return 0;
+    }
 
+    // Primeiro dígito verificador
+    int soma = 0;
+    for (int i = 0, peso = 10; i < 9; i++, peso--) {
+        soma += (cpf[i] - '0') * peso;
+    }
+
+    int resto = soma % 11;
+    int dig1 = (resto < 2) ? 0 : 11 - resto;
+
+    if (dig1 != (cpf[9] - '0')) {
+        return 0;
+    }
+
+    // Segundo dígito verificador
+    soma = 0;
+    for (int i = 0, peso = 11; i < 10; i++, peso--) {
+        soma += (cpf[i] - '0') * peso;
+    }
+
+    resto = soma % 11;
+    int dig2 = (resto < 2) ? 0 : 11 - resto;
+
+    if (dig2 != (cpf[10] - '0')) {
+        return 0;
+    }
+
+    return 1;
 }
 // Função para validar o CoA
 int validar_coa (double coa) {
@@ -168,78 +198,107 @@ int validar_valores_positivos (double valor) {
     }
 }
 
-// Função auxiliar para converter a string do GTK de forma segura e validar o cadastro do paciente
-ResultadoValidacao validar_dados_paciente(const char *nome, const char *coa_str, const char *idade_str) {
+//validação de campo vazio, CRO/email/senha estruturados 
+ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
+    ResultadoCadastro resultado;
+    //verifica se os campos estão vazios ou inválidos, se sim, retorna a mensagem de erro correspondente
+    resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
+    resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
+    resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
+    resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;
 
-    if (strlen(nome) == 0) {
-        return (ResultadoValidacao){0, "Nome do paciente não pode ser vazio"};
+    return resultado;
+}
+
+//validação de login, CRO/senha estruturados
+ResultadoLogin validarLogin(const char *cro, const char *senha) {
+    ResultadoLogin resultado;
+
+    //checa formatação do cro e senha antes de procurar se o login existe
+    resultado.cro = (!validarCro(cro)) ? "Insira um CRO válido" : NULL; 
+    resultado.senha = (!validarSenha(senha)) ? "Insira uma senha válida" : NULL; 
+    resultado.autenticacao = NULL;
+
+    // só verifica no arquivo se o formato já tiver ok
+    if (resultado.cro == NULL && resultado.senha == NULL) {
+        if (!realizarLogin(cro, senha)) {
+            resultado.autenticacao = "CRO ou senha incorretos";
         }
-        char *endptr;
-        double coa = strtod(coa_str, &endptr);
-
-    // Aqui vou verificar se a Conversão falhou ou se o campo tá vazio
-    if (endptr == coa_str || *endptr != '\0') {
-        return (ResultadoValidacao){0, "CoA inválido, corrija!"};
     }
 
-    double idade = strtod(idade_str, &endptr);
-    if (endptr == idade_str || *endptr != '\0') {
-        return (ResultadoValidacao){0, "Idade inválida, corrija!"};
-    }
+    return resultado;
 
-    // Aplicando o valor positivo e o CoA válido
-    if (!validar_coa) {
-        return (ResultadoValidacao){0, "CoA fora da faixa de 80 a 108, corrija!"};
-    }
+}
 
-    if (!validar_valores_positivos(idade)) {
-        return (ResultadoValidacao){0, "Idade deve ser maior que zero, corrija!"};
-    }
+// Valida os dados de cadastro de um paciente e retorna mensagens de erro se houver algum problema
+ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char *idade, const char *coa, const char *cogn, const char *afai) {
+    ResultadoPaciente resultado;
 
-    return (ResultadoValidacao){1, NULL}; // Todos os campos válidos
+    resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
+    resultado.cpf = !validarCpf(cpf) ? "Insira um CPF válido" : NULL;
+    resultado.idade = (!validar_valores_positivos(atoi(idade))) ? "Insira uma idade válida" : NULL;
+    resultado.coa = (!validar_coa(atof(coa))) ? "Insira um CoA válido" : NULL;
+    resultado.cogn = (!validar_valores_positivos(atoi(cogn))) ? "Insira um CoGn válido" : NULL;
+    resultado.afai = (!validar_valores_positivos(atoi(afai))) ? "Insira um AFAI válido" : NULL;
+
+    return resultado;
+   
 }
 
 ResultadoDiagnostico calcular_diagnostico(Paciente *p) {
     ResultadoDiagnostico resultado;
-    int coa, cogn, afai;
-
-    sscanf(p->coa, "%d", &coa);
+    double coa;
+    int cogn, afai;
+    // Converte strings para numeros 
+    sscanf(p->coa, "%lf", &coa);
     sscanf(p->cogn, "%d", &cogn);
     sscanf(p->afai, "%d", &afai);
 
+    // Preenche a estrutura ResultadoDiagnostico com os valores do paciente
+    resultado.paciente = *p; 
+
+    // Ajusta o valor do CoA com base no tipo de maxila
     if (p->tipo_maxila == MAXILA_NORMAL) {
         resultado.coa_ajustado = coa;
     }
     else if (p->tipo_maxila == MAXILA_PROTRUIDA) {
         resultado.coa_ajustado = coa - p->grau_maxila;
     }
-    else { // RETRUIDA
+    else {
         resultado.coa_ajustado = coa + p->grau_maxila;
     }
-
+ 
     LinhaMcNamara linha_certa;
     int achou = 0;
-
+    // Procura a linha correspondente na tabela de McNamara
     for (int i = 0; i < 29; i++) {
-        if (TABELA_MCNAMARA[i].coa == resultado.coa_ajustado) {
+        if (TABELA_MCNAMARA[i].coa == (int)resultado.coa_ajustado) {
             linha_certa = TABELA_MCNAMARA[i];
             achou = 1;
             break;
         }
     }
 
+    // Se não encontrar na tabela, retorna mensagem de erro
     if (!achou) {
         resultado.mensagem = "CoA fora da faixa da tabela";
+        resultado.cogn_min_ideal = 0;
+        resultado.cogn_max_ideal = 0;
+        resultado.afai_min_ideal = 0;
+        resultado.afai_max_ideal = 0;
+        resultado.classificacao_cogn = "N/A";
+        resultado.classificacao_afai = "N/A";
         return resultado;
     }
 
+    // Preenche os valores ideais de CoGn e AFAI a partir da linha correspondente na tabela
     resultado.cogn_min_ideal = linha_certa.cogn_min;
     resultado.cogn_max_ideal = linha_certa.cogn_max;
     resultado.afai_min_ideal = linha_certa.afai_min;
     resultado.afai_max_ideal = linha_certa.afai_max;
-    resultado.paciente = *p;
     resultado.mensagem = NULL;
 
+    // Classifica o CoGn e AFAI do paciente com base nos valores ideais da tabela
     if (cogn >= linha_certa.cogn_min && cogn <= linha_certa.cogn_max) {
         resultado.classificacao_cogn = "normal";
     } else if (cogn < linha_certa.cogn_min) {
