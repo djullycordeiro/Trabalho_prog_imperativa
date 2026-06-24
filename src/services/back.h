@@ -157,6 +157,7 @@ int validarCpf(const char *cpf);
 
 int validarCro(const char *cro);
 
+
 int validarEmail(const char *email); 
 
 int validarSenha(const char *senha);

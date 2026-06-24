@@ -143,3 +143,25 @@ ComentarioPuro carregarComentario(const char *cpf) {
     fclose(arquivo);
     return dados;
 }
+
+int croExiste(const char *cro){
+    FILE *arquivo = fopen(caminho_usuarios, "r");
+    if (arquivo == NULL) return 0;
+
+    Doutor doutorLido;
+    int existe = 0;
+
+    while (fscanf(arquivo, "%[^,], %[^,], %[^,], %[^\n]\n",
+    doutorLido.nome, doutorLido.senha, doutorLido.email, doutorLido.cro
+    )!= EOF) {
+        // Compara se o CRO digitado batem com a linha atual do arquivo
+        if (strcmp(cro, doutorLido.cro) == 0) {
+            existe = 1;
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    return existe;
+}

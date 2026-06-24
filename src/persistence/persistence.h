@@ -38,4 +38,6 @@ int salvarComentario(const DadosComentario *comentario_save);
 
 ComentarioPuro carregarComentario(const char *cpf);
 
+int croExiste(const char *cro);
+
 #endif

@@ -1,10 +1,10 @@
 # Trabalho de Programação Imperativa
-
+![alt text](img/image.png)
 ## Sobre o projeto
 Este repositório contém uma aplicação GTK em C desenvolvida para o Projeto de Extensão de Programação Imperativa da Poli-UPE. O objetivo é criar um aplicativo simples para a Faculdade de Odontologia da Universidade de Pernambuco utilizando a linguagem de programação C.
 
 ## Como Funciona?
-
+![Paciente](img/image-2.png)
 Cada paciente possui os seguintes valores:
 - CoA (Maxila do paciente);
 - CoGn (Mandíbula do paciente);
@@ -68,6 +68,8 @@ para CoA 91, AFAI deveria ser 63-64, AFAI de 70mm (do paciente)
 
 **ALTURA FACIAL AUMENTADA**
 
+![Pagina Inicial](img/image-4.png)
+
 ## Como compilar
 ### No WSL (Luis)
 ```bash
@@ -84,7 +86,7 @@ mkdir build
 cd build
 cmake -G "MinGW Makefiles" ..
 mingw32-make
-ProjetoPI-FOP.exe
+.\ProjetoPI-FOP.exe
 ```
 
 ### Ninja (Giulia e Djully)
@@ -101,22 +103,23 @@ ninja
 ```bash
 mkdir build
 cd build
-
 cmake ..
 make
-
 ./ProjetoPI-FOP
 ```
 
 
 ## Como executar
-- Execute o binário gerado após a compilação.
+- Execute o executável binário gerado após a compilação no terminal. ex.: ./ProjetoPI-FOP
 
-## Links úteis
+![pesquisa pacientes](img/image-1.png)
+
+## Referências
 - [Documentação GTK 4](https://docs.gtk.org/gtk4/index.html)
 - [GtkEntry — componente de entrada de texto](https://docs.gtk.org/gtk4/class.Entry.html)
 - [Repositório de referência da monitoria](https://github.com/MonitoriaPI/Tarefases)
 
+![Cadastro](img/image-3.png)
 
 ## Alunos: 
 - Djullyene da Silva Cordeiro
@@ -124,3 +127,4 @@ make
 - Jamerson Lucas Félix Virginio de Souza
 - Luis Felipe Teixeira de Mello
 - Matheus Fentes Huang
+

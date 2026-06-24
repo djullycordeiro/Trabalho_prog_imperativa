@@ -36,10 +36,7 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
     janela = create_window(data, "Cadastro de Doutor", 600, 450);
     dados_doutor->janela = janela;
 
-    caixa = gtk_box_new(
-        GTK_ORIENTATION_VERTICAL,
-        12
-    );
+    caixa = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 
     gtk_widget_set_margin_top(caixa, 30);
     gtk_widget_set_margin_bottom(caixa, 30);
@@ -63,6 +60,10 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
         "Nome completo"
     );
     gtk_box_append(GTK_BOX(caixa), dados_doutor->nome);
+
+    dados_doutor->erro_nome = gtk_label_new("Insira um nome válido");
+    gtk_widget_set_visible(dados_doutor->erro_nome, FALSE);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->erro_nome);
     
     dados_doutor->cro = gtk_entry_new();
     gtk_entry_set_placeholder_text(
@@ -71,6 +72,10 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
     );
     gtk_box_append(GTK_BOX(caixa), dados_doutor->cro);
 
+    dados_doutor->erro_cro = gtk_label_new("Insira um CRO válido");
+    gtk_widget_set_visible(dados_doutor->erro_cro, FALSE);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->erro_cro);
+
     dados_doutor->email = gtk_entry_new();
     gtk_entry_set_placeholder_text(
         GTK_ENTRY(dados_doutor->email),
@@ -78,17 +83,26 @@ void abrir_tela_cadastro_doutor(GtkWidget *widget, gpointer data)
     );
     gtk_box_append(GTK_BOX(caixa), dados_doutor->email);
 
+    dados_doutor->erro_email = gtk_label_new("Insira um email válido");
+    gtk_widget_set_visible(dados_doutor->erro_email, FALSE);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->erro_email);
+
     dados_doutor->senha = gtk_entry_new();
     gtk_entry_set_placeholder_text(
         GTK_ENTRY(dados_doutor->senha),
         "Crie uma senha"
     );
-    gtk_entry_set_visibility(
-        GTK_ENTRY(dados_doutor->senha),
-        FALSE
-    );
+    gtk_entry_set_visibility(GTK_ENTRY(dados_doutor->senha), FALSE);
     gtk_box_append(GTK_BOX(caixa), dados_doutor->senha);
 
+    dados_doutor->erro_senha = gtk_label_new("Insira um senha válida (Ex: Senha!123)");
+    gtk_widget_set_visible(dados_doutor->erro_senha, FALSE);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->erro_senha);
+    
+    dados_doutor->erro_cadastro = gtk_label_new("ERRO: Corrija as informações indicadas");
+    gtk_widget_set_visible(dados_doutor->erro_cadastro, FALSE);
+    gtk_box_append(GTK_BOX(caixa), dados_doutor->erro_cadastro);
+    
     // Botão para confirmar login
     botao = gtk_button_new_with_label(
         "Cadastrar"

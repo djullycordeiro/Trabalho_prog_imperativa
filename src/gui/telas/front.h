@@ -22,6 +22,11 @@ typedef struct {
     GtkWidget *email;
     GtkWidget *senha;
     GtkWidget *janela;
+    GtkWidget *erro_cadastro;
+    GtkWidget *erro_nome;
+    GtkWidget *erro_cro;
+    GtkWidget *erro_email;
+    GtkWidget *erro_senha;
 } Dados_doutor;
 
 typedef struct {
@@ -34,6 +39,13 @@ typedef struct {
     GtkWidget *tipo_maxila;
     GtkWidget *grau_maxila;
     GtkWidget *janela;
+    GtkWidget *erro_cadastro;
+    GtkWidget *erro_nome;
+    GtkWidget *erro_idade;
+    GtkWidget *erro_cpf;
+    GtkWidget *erro_coa;
+    GtkWidget *erro_cogn;
+    GtkWidget *erro_afai;
 } Dados_paciente;
 
 //activate - Tela de login da aplicacao
