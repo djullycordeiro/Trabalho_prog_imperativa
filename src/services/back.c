@@ -207,15 +207,42 @@ int validarIdade(const char *idade) {
 
     return 1;
 }
-
-
-// Valida se um valor genérico é maior que zero
-int validar_valores_positivos (double valor) {
-    if (valor > 0) {
-        return 1; // válido
-    } else {
-        return 0; // inválido
+int validarCogn(const char *cogn) {
+    if (cogn == NULL || strlen(cogn) == 0) {
+        return 0;
     }
+
+    for (size_t i = 0; i < strlen(cogn); i++) {
+        if (!isdigit((unsigned char)cogn[i])) {
+            return 0;
+        }
+    }
+
+    int valor = atoi(cogn);
+    if (valor < 0 || valor > 200) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int validarAFAI(const char *afai) {
+    if (afai == NULL || strlen(afai) == 0) {
+        return 0;
+    }
+
+    for (size_t i = 0; i < strlen(afai); i++) {
+        if (!isdigit((unsigned char)afai[i])) {
+            return 0;
+        }
+    }
+
+    int valor = atoi(afai);
+    if (valor < 0 || valor > 200) {
+        return 0;
+    }
+
+    return 1;
 }
 
 //validação de campo vazio, CRO/email/senha estruturados 
@@ -258,8 +285,8 @@ ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char 
     resultado.cpf = !validarCpf(cpf) ? "Insira um CPF válido" : NULL;
     resultado.idade = (!validarIdade(idade)) ? "Insira uma idade válida" : NULL;
     resultado.coa = (!validar_coa(atof(coa))) ? "Insira um CoA válido" : NULL;
-    resultado.cogn = (!validar_valores_positivos(atoi(cogn))) ? "Insira um CoGn válido" : NULL;
-    resultado.afai = (!validar_valores_positivos(atoi(afai))) ? "Insira um AFAI válido" : NULL;
+    resultado.cogn = (!validarCogn(cogn)) ? "Insira um CoGn válido" : NULL;
+    resultado.afai = (!validarAFAI(afai)) ? "Insira um AFAI válido" : NULL;
 
     return resultado;
    

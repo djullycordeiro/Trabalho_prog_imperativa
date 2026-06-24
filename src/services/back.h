@@ -159,6 +159,7 @@ int validarCpf(const char *cpf);
 
 int validarCro(const char *cro);
 
+int croExiste(const char *cro);
 
 int validarEmail(const char *email); 
 
@@ -166,6 +167,8 @@ int validarSenha(const char *senha);
 
 int validar_coa (double coa);
 
-int validar_valores_positivos (double valor);
+int validarAFAI(const char *afai);
+
+int validarCogn(const char *cogn);
 
 #endif
