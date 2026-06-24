@@ -203,7 +203,7 @@ ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char 
     ResultadoCadastro resultado;
     //verifica se os campos estão vazios ou inválidos, se sim, retorna a mensagem de erro correspondente
     resultado.nome = !validarNome(nome) ? "Insira um nome válido" : NULL;
-    resultado.cro = !validarCro(cro) ? "Insira um CRO válido" : NULL;
+    resultado.cro = (!validarCro(cro) || !cro_ja_existe(cro)) ? "Insira um CRO válido" : NULL;
     resultado.email = !validarEmail(email) ? "Insira um email válido" : NULL;
     resultado.senha = !validarSenha(senha) ? "Insira uma senha válida" : NULL;
 
