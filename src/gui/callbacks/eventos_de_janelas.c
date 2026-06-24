@@ -136,6 +136,7 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
         gtk_window_close(GTK_WINDOW(dados->janela));
     } else {
         g_print("Erro ao cadastrar Paciente.\n");
+        return;
     }
 }
 

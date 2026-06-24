@@ -157,7 +157,6 @@ int validarCpf(const char *cpf);
 
 int validarCro(const char *cro);
 
-int cro_ja_existe(const char *cro);
 
 int validarEmail(const char *email); 
 
