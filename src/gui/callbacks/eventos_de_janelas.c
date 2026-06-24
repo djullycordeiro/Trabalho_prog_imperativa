@@ -40,15 +40,35 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
 // Callback para o botão de cadastrar doutor
 void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
     Dados_doutor *dados = user_data;
-    ResultadoCadastro valida_cadastro = validarCadastro(0,0,0,0);
-
+    
     const gchar *nome = gtk_editable_get_text(GTK_EDITABLE(dados->nome));
     const gchar *cro = gtk_editable_get_text(GTK_EDITABLE(dados->cro));
     const gchar *email = gtk_editable_get_text(GTK_EDITABLE(dados->email));
     const gchar *senha = gtk_editable_get_text(GTK_EDITABLE(dados->senha));
+    
+    ResultadoCadastro valida_cadastro = validarCadastro(nome, cro, email, senha);
 
-    if (strlen(nome) == 0 || strlen(cro) == 0 || strlen(email) == 0 || strlen(senha) == 0) {
+    gtk_widget_set_visible(dados->erro_nome, FALSE); 
+    gtk_widget_set_visible(dados->erro_cro, FALSE); 
+    gtk_widget_set_visible(dados->erro_email, FALSE); 
+    gtk_widget_set_visible(dados->erro_senha, FALSE); 
+    gtk_widget_set_visible(dados->erro_cadastro, FALSE); 
+
+    if (valida_cadastro.nome || valida_cadastro.cro ||valida_cadastro.email || valida_cadastro.senha ) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
+        gtk_widget_set_visible(dados->erro_cadastro, TRUE);
+        if (valida_cadastro.nome){
+            g_print("%s\n", valida_cadastro.nome);
+            gtk_widget_set_visible(dados->erro_nome, TRUE);}
+        if (valida_cadastro.cro){
+            g_print("%s\n", valida_cadastro.cro);
+            gtk_widget_set_visible(dados->erro_cro, TRUE);}
+        if (valida_cadastro.email){
+            g_print("%s\n", valida_cadastro.email);
+            gtk_widget_set_visible(dados->erro_email, TRUE);}
+        if (valida_cadastro.senha){
+            g_print("%s\n", valida_cadastro.senha);
+            gtk_widget_set_visible(dados->erro_senha, TRUE);}
         return;
     }
 
@@ -91,6 +111,13 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
 
     ResultadoPaciente valida_paciente = validarPaciente(nome, cpf, idade, coa, cogn, afai);
     
+    gtk_widget_set_visible(dados->erro_nome, FALSE); 
+    gtk_widget_set_visible(dados->erro_cpf, FALSE); 
+    gtk_widget_set_visible(dados->erro_idade, FALSE); 
+    gtk_widget_set_visible(dados->erro_coa, FALSE); 
+    gtk_widget_set_visible(dados->erro_cogn, FALSE); 
+    gtk_widget_set_visible(dados->erro_afai, FALSE); 
+
     if (valida_paciente.nome || valida_paciente.cpf || valida_paciente.idade || 
         valida_paciente.coa || valida_paciente.cogn || valida_paciente.afai ) {
         g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
@@ -136,7 +163,6 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
         gtk_window_close(GTK_WINDOW(dados->janela));
     } else {
         g_print("Erro ao cadastrar Paciente.\n");
-        return;
     }
 }
 

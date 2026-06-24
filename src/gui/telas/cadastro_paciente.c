@@ -142,7 +142,7 @@ void abrir_tela_cadastro_paciente(GtkWidget *widget, gpointer data)
     gtk_widget_set_size_request(dados_paciente->grau_maxila,60,-1);
     gtk_box_append(GTK_BOX(caixa_maxila), dados_paciente->grau_maxila);
 
-    dados_paciente->erro_cadastro = gtk_label_new("Erro: todos os campos de cadastro são obrigatórios.");
+    dados_paciente->erro_cadastro = gtk_label_new("Erro: Corrija as informações indicadas");
     gtk_widget_set_visible(dados_paciente->erro_cadastro, FALSE);
     gtk_box_append(GTK_BOX(caixa_principal), dados_paciente->erro_cadastro);
 
