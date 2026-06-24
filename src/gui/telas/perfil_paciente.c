@@ -13,6 +13,7 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     GtkWidget *info;
     GtkWidget *exames;
     GtkWidget *exames_ajust;
+    GtkWidget *exames_classi;
     GtkWidget *diagnostico;
 
     GtkWidget *subtitulo_comentarios;
@@ -65,11 +66,10 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     sprintf(examPaciente, 
         "CoA: %s\n"
         "CoGn: %s\n"
-        "AFAI: %s\n"
-        "Classificação Maxila: %s %d",
+        "AFAI: %s\n",        
         paciente->coa,
-        paciente->cogn, paciente->afai,
-        tipos_maxila[paciente->tipo_maxila], paciente->grau_maxila
+        paciente->cogn, 
+        paciente->afai        
     );
     exames = gtk_label_new(examPaciente);
     gtk_widget_set_hexpand(exames, TRUE);
@@ -80,19 +80,29 @@ void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
     sprintf(exam_ajust_Paciente, 
         "CoA (ajustado): %lf\n"
         "CoGn (valor ideal): %d - %d\n"
-        "Classificação CoGn: %s\n"
-        "AFAI (valor ideal): %d - %d\n"
-        "Classificação AFAI: %s\n",
+        "AFAI (valor ideal): %d - %d\n",
         pacienteDiag.coa_ajustado,
         pacienteDiag.cogn_min_ideal, pacienteDiag.cogn_max_ideal,
-        pacienteDiag.classificacao_cogn,
-        pacienteDiag.afai_min_ideal, pacienteDiag.afai_max_ideal,
-        pacienteDiag.classificacao_afai
+        pacienteDiag.afai_min_ideal, pacienteDiag.afai_max_ideal
     );
     exames_ajust = gtk_label_new(exam_ajust_Paciente);
     gtk_widget_set_hexpand(exames_ajust, TRUE);
     gtk_label_set_xalign(GTK_LABEL(exames_ajust), 0.0);
     gtk_box_append(GTK_BOX(caixa_exames_diag), exames_ajust);
+
+    char exam_classi[200]; 
+    sprintf(exam_classi, 
+        "Classificação Maxila: %s %d\n"       
+        "Classificação CoGn: %s\n"        
+        "Classificação AFAI: %s\n",
+        tipos_maxila[paciente->tipo_maxila], paciente->grau_maxila,
+        pacienteDiag.classificacao_cogn,
+        pacienteDiag.classificacao_afai
+    );
+    exames_classi = gtk_label_new(exam_classi);
+    gtk_widget_set_hexpand(exames_classi, TRUE);
+    gtk_label_set_xalign(GTK_LABEL(exames_classi), 0.0);
+    gtk_box_append(GTK_BOX(caixa_exames_diag), exames_classi);
     
     subtitulo_exames_diag = gtk_label_new("Exames e Diagnóstico");
     gtk_box_append(GTK_BOX(caixa_principal), subtitulo_exames_diag);
