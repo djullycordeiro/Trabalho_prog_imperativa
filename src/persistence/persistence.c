@@ -1,8 +1,8 @@
 #include "persistence.h"
 
 // Caminhos para os arquivos .csv
-static const char caminho_usuarios[] = "../src/data/usuarios.csv";
-static const char caminho_pacientes[] = "../src/data/pacientes.csv";
+static const char caminho_usuarios[] = "data/usuarios.csv";
+static const char caminho_pacientes[] = "data/pacientes.csv";
 
 // Função que faz a escrita do doutor no csv
 int cadastrarDoutor(const Doutor *doutor) {
@@ -105,7 +105,7 @@ int listarPacientes(Paciente pacientes[]){
 // Função que salva o comentário em um arquivo .txt
 int salvarComentario(const DadosComentario *comentario_save){
     char caminho_comentario[500];
-    sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", comentario_save->cpf);
+    sprintf(caminho_comentario, "data/comentarios/%s.txt", comentario_save->cpf);
 
     FILE *arquivo = fopen(caminho_comentario, "w");
     if (arquivo == NULL){
@@ -124,7 +124,7 @@ int salvarComentario(const DadosComentario *comentario_save){
 // Função que carrega o comentário de um arquivo .txt para ficar em tela.
 ComentarioPuro carregarComentario(const char *cpf) {
     char caminho_comentario[100];
-    sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", cpf);
+    sprintf(caminho_comentario, "data/comentarios/%s.txt", cpf);
 
     ComentarioPuro dados;
     dados.qtd_linhas = 0;
