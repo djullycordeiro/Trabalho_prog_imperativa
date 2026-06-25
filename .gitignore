@@ -1,4 +1,7 @@
 /build/
+/buildninja/
+/buildmsys2/
+/buildwsl/
 
 CMakeCache.txt
 CMakeFiles/

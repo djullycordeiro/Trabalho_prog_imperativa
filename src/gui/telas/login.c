@@ -77,7 +77,7 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     );
     gtk_box_append(GTK_BOX(container), botao_confirmar_login);
 
-    // Botão para c
+    // Botão para cadastro
     botao_criar_login = gtk_button_new_with_label("Criar login");
     gtk_widget_add_css_class(botao_criar_login, "flat"); // Remove o fundo e as bordas
     g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_tela_cadastro_doutor), app);
