@@ -37,7 +37,7 @@ void abrir_tela_home_doutor_logado(GtkWidget *widget, gpointer data)
         caixa
     );
     
-    upe = gtk_picture_new_for_filename("img/upeim.png");
+    upe = gtk_picture_new_for_filename("../img/upeim.png");
     gtk_widget_set_halign(upe, GTK_ALIGN_CENTER);
     //gtk_widget_set_size_request(upe, 100, 50);
     gtk_box_append(GTK_BOX(caixa), upe);
