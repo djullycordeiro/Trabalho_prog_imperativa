@@ -8,20 +8,17 @@
 #include "../../persistence/persistence.h"
 
 /**
- * Callbacks (manipuladores de eventos) para widgets da interface gráfica.
- * 
- * Responsabilidades:
- *   - Capturar eventos de widgets (cliques, mudanças em campos, etc)
- *   - Chamar funções de validação do services/back.c
- *   - Atualizar a interface com base nos resultados
- */
+Callbacks (manipuladores de eventos) para widgets da interface gráfica.
+ 
+Responsabilidades:
+  - Capturar eventos de widgets (cliques, mudanças em campos, etc)
+  - Chamar funções de validação do services/back.c
+  - Atualizar a interface com base nos resultados
+**/
 
 /**
- * clicar_botao_confirmar_login - Callback para o botão de confirmação de login
- * @widget: widget que disparou o evento
- * @user_data: dados do login (estrutura Dados_login_senha)
- * 
- * Valida os campos de login e senha, exibindo mensagens de erro se necessário.
+clicar_botao_confirmar_login - Callback para o botão de confirmação de login
+Valida os campos de login e senha, exibindo mensagens de erro se necessário.
  */
 void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data);
 

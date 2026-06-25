@@ -1,5 +1,10 @@
 #include "front.h"
 
+/*
+Página de pesquisa de pacientes
+Abre uma página com todos os pacientes registrados
+*/
+
 //pesquisa no banco de pacientes
 void abrir_tela_pesquisar_pacientes(GtkWidget *widget, gpointer data)
 {

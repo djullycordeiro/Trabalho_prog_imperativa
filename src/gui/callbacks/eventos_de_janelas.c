@@ -7,7 +7,7 @@ RESPONSABILIDADES:
     - Capturar eventos de interacao do usuario (cliques, entrada de texto, etc)
     - Validar entradas atraves de chamadas para services/back.c
     - Atualizar a interface grafica com feedback visual
- */
+**/
 
 //clicar_botao_confirmar_login - Valida os dados de login inseridos
 void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
@@ -15,9 +15,6 @@ void clicar_botao_confirmar_login (GtkWidget *widget, gpointer user_data){
 
     const gchar *login = gtk_editable_get_text(GTK_EDITABLE(dados->login));
     const gchar *senha = gtk_editable_get_text(GTK_EDITABLE(dados->senha));
-    
-    g_print("Login: %s\n", login);
-    g_print("Senha: %s\n", senha);
     
     // tratamento de entrada (campo vazio)
     if (strlen(login) == 0 || strlen(senha) == 0 || realizarLogin(login, senha) == 0) {
@@ -55,7 +52,6 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
     gtk_widget_set_visible(dados->erro_cadastro, FALSE); 
 
     if (valida_cadastro.nome || valida_cadastro.cro ||valida_cadastro.email || valida_cadastro.senha ) {
-        g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
         gtk_widget_set_visible(dados->erro_cadastro, TRUE);
         if (valida_cadastro.nome){
             g_print("%s\n", valida_cadastro.nome);
@@ -84,6 +80,7 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
     strncpy(novo.senha, senha, sizeof(novo.senha)-1);
     novo.senha[sizeof(novo.senha)-1] = '\0';
 
+    // função de persistence, print para registrar resultado
     if (cadastrarDoutor(&novo)) {
         g_print("Doutor cadastrado com sucesso: %s\n", novo.nome);
         gtk_window_close(GTK_WINDOW(dados->janela));
@@ -92,6 +89,7 @@ void clicar_botao_cadastrar_doutor(GtkWidget *widget, gpointer user_data) {
     }
 }
 
+// Callback pra botão de cadastro de paciente
 void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     Dados_paciente *dados = user_data;
     
@@ -120,7 +118,6 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
 
     if (valida_paciente.nome || valida_paciente.cpf || valida_paciente.idade || 
         valida_paciente.coa || valida_paciente.cogn || valida_paciente.afai ) {
-        g_print("Erro: todos os campos de cadastro são obrigatórios.\n");
         gtk_widget_set_visible(dados->erro_cadastro, TRUE);
         if (valida_paciente.nome){
             g_print("%s\n", valida_paciente.nome);
@@ -158,6 +155,7 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     strncpy(novo.afai, afai, sizeof(novo.afai)-1);
     novo.afai[sizeof(novo.afai)-1] = '\0';
 
+    // função de persistence, print para registrar resultado
     if (cadastrarPaciente(&novo)) {
         g_print("Paciente cadastrado com sucesso: %s\n", novo.nome);
         gtk_window_close(GTK_WINDOW(dados->janela));
@@ -166,6 +164,7 @@ void clicar_botao_cadastrar_paciente(GtkWidget *widget, gpointer user_data){
     }
 }
 
+// Callback de salvamento de comentários do doutor
 void clicar_botao_salvar_comentario(GtkWidget *widget, gpointer user_data){
     DadosComentario *dados = user_data;
     DadosComentario comentario;
@@ -189,6 +188,7 @@ void clicar_botao_salvar_comentario(GtkWidget *widget, gpointer user_data){
     strncpy(comentario.cpf, dados->cpf, sizeof(comentario.cpf)-1);
     comentario.cpf[sizeof(comentario.cpf)-1] = '\0';
 
+    // Print para registro
     if (salvarComentario(&comentario)) g_print("Comentário salvo!\n");
     else g_print("Erro ao salvar comentário.\n");
 

@@ -7,20 +7,6 @@
 #include <stdio.h>
 #include <time.h>
 
-// Persistance: registra um novo doutor a partir de uma estrutura Doutor
-// Retorna 1 em caso de sucesso, 0 em caso de falha
-int cadastrarDoutor(const Doutor *doutor);
-
-int cadastrarPaciente(const Paciente *paciente);
-
-int realizarLogin(const char *login, const char *senha);
-
-// Salva paciente em CSV (declarado em persistence.c)
-int salvarPacienteCSV(Paciente paciente);
-
-//cria array de struct de pacientes e conta a quantidade de pacientes salvos
-int listarPacientes(Paciente pacientes[]);
-
 // Estrutura usada para comentários (compartilhada entre GUI e persistence)
 typedef struct {
 	GtkWidget *comentario_widget; // widget TextView usado pela GUI
@@ -28,16 +14,28 @@ typedef struct {
 	char cpf[20];                 // cpf do paciente (usado no nome do arquivo)
 } DadosComentario;
 
+// Nova struct pra comentários
 typedef struct {
-    // Um array de 30 strings. Cada posição (ex: linhas[0]) é uma string completa.
     char linhas[30][500]; 
     int qtd_linhas;
 } ComentarioPuro;
 
+// Funções de Cadastro 
+int cadastrarDoutor(const Doutor *doutor);
+
+int cadastrarPaciente(const Paciente *paciente);
+
+int realizarLogin(const char *login, const char *senha);
+
+// Cria array de struct de pacientes e conta a quantidade de pacientes salvos
+int listarPacientes(Paciente pacientes[]);
+
+// Funções de salvamento e carregamento de comentário
 int salvarComentario(const DadosComentario *comentario_save);
 
 ComentarioPuro carregarComentario(const char *cpf);
 
+// Função de verificação de duplicata de cro
 int croExiste(const char *cro);
 
 #endif

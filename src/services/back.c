@@ -8,8 +8,6 @@
 /**
 back.c - Logica de negocio e servicos da aplicacao
 
-IMPORTANTE: Este arquivo NAO deve conter qualquer referencia a GTK
-
 RESPONSABILIDADES:
     - Implementar regras de negocio
     - Validar dados antes de persistir
@@ -19,7 +17,7 @@ RESPONSABILIDADES:
 Este eh o cerebro da aplicacao (separado da interface).
 */
 
-// Função para validar o nome, evitanod inserts de nomes com caracteres inválidos
+// Função para validar o nome, evitando inserts de nomes com caracteres inválidos
 int validarNome(const char *nome) {
     if (strlen(nome) == 0) {
         return 0;
@@ -44,6 +42,7 @@ int validarNome(const char *nome) {
 
     return 1;
 }
+
 // Função para validar o email
 int validarEmail(const char *email) {
 
@@ -129,6 +128,7 @@ int validarCro(const char *cro) {
     return 1;
 }
 
+// Função para validar o CPF
 int validarCpf(const char *cpf) {
     if (strlen(cpf) != 11) {
         return 0;
@@ -181,6 +181,7 @@ int validarCpf(const char *cpf) {
 
     return 1;
 }
+
 // Função para validar o CoA
 int validar_coa (double coa) {
     if (coa >= 80 && coa <= 108) {
@@ -189,6 +190,8 @@ int validar_coa (double coa) {
         return 0; // inválido
     }
 }
+
+// Função para validar o valor da idade
 int validarIdade(const char *idade) {
     if (idade == NULL || strlen(idade) == 0) {
         return 0;
@@ -207,6 +210,8 @@ int validarIdade(const char *idade) {
 
     return 1;
 }
+
+// Função para validar o valor de CoGn
 int validarCogn(const char *cogn) {
     if (cogn == NULL || strlen(cogn) == 0) {
         return 0;
@@ -226,6 +231,7 @@ int validarCogn(const char *cogn) {
     return 1;
 }
 
+// Função para validar o valor de AFAI
 int validarAFAI(const char *afai) {
     if (afai == NULL || strlen(afai) == 0) {
         return 0;
@@ -245,7 +251,7 @@ int validarAFAI(const char *afai) {
     return 1;
 }
 
-//validação de campo vazio, CRO/email/senha estruturados 
+// Função de validação de campo vazio, CRO/email/senha estruturados 
 ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha) {
     ResultadoCadastro resultado;
     //verifica se os campos estão vazios ou inválidos, se sim, retorna a mensagem de erro correspondente
@@ -257,7 +263,7 @@ ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char 
     return resultado;
 }
 
-//validação de login, CRO/senha estruturados
+// Função de validação de login, CRO/senha estruturados
 ResultadoLogin validarLogin(const char *cro, const char *senha) {
     ResultadoLogin resultado;
 
@@ -277,7 +283,7 @@ ResultadoLogin validarLogin(const char *cro, const char *senha) {
 
 }
 
-// Valida os dados de cadastro de um paciente e retorna mensagens de erro se houver algum problema
+// Função que valida os dados de cadastro de um paciente e retorna mensagens de erro se houver algum problema
 ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char *idade, const char *coa, const char *cogn, const char *afai) {
     ResultadoPaciente resultado;
 
@@ -292,6 +298,7 @@ ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char 
    
 }
 
+// Função do cálculo e classificação para o diagnóstico
 ResultadoDiagnostico calcular_diagnostico(Paciente *p) {
     ResultadoDiagnostico resultado;
     double coa;

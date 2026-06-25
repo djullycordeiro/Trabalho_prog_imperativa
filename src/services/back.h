@@ -4,17 +4,17 @@
 /**
 Funcoes de validacao de logica de negocio
 Estas funcoes implementam as regras de negocio
-e NAO devem conter nenhuma referencia a GTK
 */
 
 typedef struct {
     int coa;        // Comprimento efetivo da Maxila (Co-A) em mm
-    int cogn_min; //  Comprimento efetivo da Mandibula (Cogn) min em mm
-    int cogn_max; // COGN máx ideal em mm
-    int afai_min;  // Altura Facial Anterior Inferior (AFAI) min em mm
-    int afai_max; // AFAI max ideal em mm
+    int cogn_min;   // Comprimento efetivo da Mandibula (Cogn) min em mm
+    int cogn_max;   // COGN máx ideal em mm
+    int afai_min;   // Altura Facial Anterior Inferior (AFAI) min em mm
+    int afai_max;   // AFAI max ideal em mm
 } LinhaMcNamara;
 
+// Incialização do struct de mcnamara
 static const LinhaMcNamara TABELA_MCNAMARA[] = {
     //coa, cogn_min, cogn_max, afai_min, afai_max
     {80, 97, 100, 57, 58},
@@ -84,15 +84,6 @@ typedef struct {
     const char *email;
     const char *senha;
 } ResultadoCadastro;
-/**
-validarCadastro - Valida credenciais de cadastro
-@nome: string com nome do doutor
-@cro: string com o numero do CRO
-@email: string com o email do doutor
-@senha: string com a senha
-*/
-
-ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
 
 //resultado da validação do login
 typedef struct {
@@ -100,12 +91,6 @@ typedef struct {
     const char *senha;
     const char *autenticacao; // "CRO ou senha incorretos" ou NULL se ok
 } ResultadoLogin;
-/**
-validarLogin - Valida credenciais de login
-@login: string com CRO do doutor
-@senha: string com a senha
-*/
-ResultadoLogin validarLogin(const char *cro, const char *senha);
 
 // struct com os resultados do diagnostico 
 typedef struct {
@@ -120,8 +105,7 @@ typedef struct {
     const char *mensagem;
 } ResultadoDiagnostico;
 
-ResultadoDiagnostico calcular_diagnostico(Paciente *p);
-
+// Struct com os dados do paciente para validação
 typedef struct {
     const char *nome;
     const char *cpf; 
@@ -130,27 +114,27 @@ typedef struct {
     const char *cogn;
     const char *afai;
 } ResultadoPaciente;
-/**
-validarPaciente - Valida dados de cadastro de novo paciente
-@nome: string com nome do paciente
-@cpf: string com o numero do CPF
-@idade: string com a idade do paciente
-@coa: string com o valor do CoA
-@cogn: string com o valor do CoGn
-@afai: string com o valor do AFAI
-*/
+
+//validarCadastro - Valida credenciais de cadastro
+ResultadoCadastro validarCadastro(const char *nome, const char *cro, const char *email, const char *senha);
+
+//validarLogin - Valida credenciais de login
+ResultadoLogin validarLogin(const char *cro, const char *senha);
+
+//calcular_diagnostico - Faz o cálculo do coa, traz a faixa de mcnamara e faz a classificação
+ResultadoDiagnostico calcular_diagnostico(Paciente *p);
+
+//validarPaciente - Valida dados de cadastro de novo paciente
 ResultadoPaciente validarPaciente(const char *nome, const char *cpf, const char *idade, const char *coa, const char *cogn, const char *afai);
 
 // Persistance: registra um novo doutor a partir de uma estrutura Doutor
-// Retorna 1 em caso de sucesso, 0 em caso de falha
 int cadastrarDoutor(const Doutor *doutor);
 
 int cadastrarPaciente(const Paciente *paciente);
 
 int realizarLogin(const char *login, const char *senha);
 
-
-// declarando existência
+// declarando existência de mais funções de validação
 int validarNome(const char *nome);
 
 int validarIdade(const char *idade);
@@ -158,8 +142,6 @@ int validarIdade(const char *idade);
 int validarCpf(const char *cpf);
 
 int validarCro(const char *cro);
-
-int croExiste(const char *cro);
 
 int validarEmail(const char *email); 
 

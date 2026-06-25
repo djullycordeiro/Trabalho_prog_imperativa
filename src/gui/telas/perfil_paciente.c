@@ -1,5 +1,12 @@
 #include "front.h"
 
+/*
+Página do perfil de paciente
+Abre uma página com o paciente selecionado
+ - Oferece opção de salvar comentário
+ - Mostra a classificação e resultado do cálculo executado pela aplicação
+*/
+
 //informações de uma unidade de paciente
 void abrir_tela_perfil_paciente(GtkWidget *widget, gpointer data)
 {

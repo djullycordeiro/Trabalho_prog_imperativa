@@ -1,8 +1,10 @@
 #include "persistence.h"
 
+// Caminhos para os arquivos .csv
 static const char caminho_usuarios[] = "../src/data/usuarios.csv";
 static const char caminho_pacientes[] = "../src/data/pacientes.csv";
 
+// Função que faz a escrita do doutor no csv
 int cadastrarDoutor(const Doutor *doutor) {
     if (doutor == NULL) {
         return 0;
@@ -26,6 +28,7 @@ int cadastrarDoutor(const Doutor *doutor) {
     return 1;
 }
 
+// Função que faz o cadastro do paciente no arquivo .csv
 int cadastrarPaciente(const Paciente *paciente){
     if (paciente == NULL) {
         return 0;
@@ -50,8 +53,8 @@ int cadastrarPaciente(const Paciente *paciente){
 
 }
 
+// Essa função vai ler o arquivo csv e verificar se as primeiras duas colunas batem com o login e senha
 int realizarLogin(const char *login, const char *senha) {
-    // Nessa função a gente vai ler o arquivo csv e verificar se as primeiras duas colunas batem com o login e senha
     FILE *arquivo = fopen(caminho_usuarios, "r");
     if (arquivo == NULL) {
         return 0; // Falha no login
@@ -76,6 +79,7 @@ int realizarLogin(const char *login, const char *senha) {
     return loginSucesso; // Retorna 1 se deu certo, 0 se falhou
 }
 
+// Função que guarda os pacientes cadastrados numa lista de structs
 int listarPacientes(Paciente pacientes[]){
     FILE *arquivo = fopen(caminho_pacientes, "r");
     if (arquivo == NULL) {
@@ -98,6 +102,7 @@ int listarPacientes(Paciente pacientes[]){
     return qnt;
 }
 
+// Função que salva o comentário em um arquivo .txt
 int salvarComentario(const DadosComentario *comentario_save){
     char caminho_comentario[500];
     sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", comentario_save->cpf);
@@ -116,6 +121,7 @@ int salvarComentario(const DadosComentario *comentario_save){
     return 1;
 }
 
+// Função que carrega o comentário de um arquivo .txt para ficar em tela.
 ComentarioPuro carregarComentario(const char *cpf) {
     char caminho_comentario[100];
     sprintf(caminho_comentario, "../src/data/comentarios/%s.txt", cpf);
@@ -144,6 +150,7 @@ ComentarioPuro carregarComentario(const char *cpf) {
     return dados;
 }
 
+// Função que verifica a existência de um cro igual ao puxado como referência pra evitar duplicatas.
 int croExiste(const char *cro){
     FILE *arquivo = fopen(caminho_usuarios, "r");
     if (arquivo == NULL) return 0;
