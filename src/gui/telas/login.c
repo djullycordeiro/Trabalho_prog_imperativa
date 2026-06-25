@@ -8,7 +8,6 @@ Abre uma página de login com opções de:
 */
 
 void abrir_tela_login(GtkWidget *widget, gpointer user_data){
-
     GtkApplication *app = GTK_APPLICATION(user_data);
 
     GtkWidget *window;
@@ -23,10 +22,10 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     window = gtk_application_window_new(app);
     gtk_window_set_title (GTK_WINDOW (window), "JustAllign");
     gtk_window_set_default_size (GTK_WINDOW (window), 1000, 800);
-
+    
+    /*Aloca a memória e inicializa tudo com 0,
+    ao invés de valores aleatórios da memória */
     Dados_login_senha *dados;
-
-    // n sei oq isso faz ---> aloca a memória e inicializa tudo com 0 ao invés de valores aleatórios da memória
     dados = g_new0(Dados_login_senha, 1);
 
     // cria um conteiner que guarda as duas caixas de entrada
@@ -70,10 +69,15 @@ void abrir_tela_login(GtkWidget *widget, gpointer user_data){
     // Botão para confirmar login
     botao_confirmar_login = gtk_button_new_with_label("Confirmar");
     // Conecta o evento de clique ao callback de validação de login
-    g_signal_connect(botao_confirmar_login, "clicked", G_CALLBACK(clicar_botao_confirmar_login), dados);
+    g_signal_connect(
+        botao_confirmar_login, 
+        "clicked", 
+        G_CALLBACK(clicar_botao_confirmar_login), 
+        dados
+    );
     gtk_box_append(GTK_BOX(container), botao_confirmar_login);
 
-
+    // Botão para c
     botao_criar_login = gtk_button_new_with_label("Criar login");
     gtk_widget_add_css_class(botao_criar_login, "flat"); // Remove o fundo e as bordas
     g_signal_connect(botao_criar_login, "clicked", G_CALLBACK(abrir_tela_cadastro_doutor), app);
